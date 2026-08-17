@@ -16,6 +16,10 @@ add_executable(
     gateway/main.cpp
 
     gateway/backend/MockBackend.cpp
+
+    gateway/protocol/ProtocolCodec.cpp
+
+    gateway/network/TcpServer.cpp
 )
 
 target_include_directories(
