@@ -1,0 +1,31 @@
+# Build
+build/
+cmake-build-*/
+
+# VS Code
+.vscode/
+
+# Object files
+*.o
+*.obj
+
+# Libraries
+*.so
+*.a
+
+# Executables
+*.out
+
+# Logs
+*.log
+
+# Temporary
+*.tmp
+*.swp
+*~
+
+# Qt
+moc_*
+ui_*
+qrc_*
+Makefile
