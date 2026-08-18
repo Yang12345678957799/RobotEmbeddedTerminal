@@ -2,6 +2,7 @@
 
 #include "model/RobotState.h"
 #include "model/IOState.h"
+#include "model/TaskState.h"
 
 #include <QObject>
 #include <QByteArray>
@@ -59,6 +60,10 @@ signals:
     // 收到新的 IO 状态
     void ioStateReceived(
         const IOState& state
+    );
+
+    void taskStateReceived(
+        const TaskState& state
     );
 
     // 调试日志

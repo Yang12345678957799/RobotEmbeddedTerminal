@@ -131,6 +131,10 @@ MainWindow::MainWindow(QWidget *parent)
             "IOState"
     );
 
+        qRegisterMetaType<TaskState>(
+            "TaskState"
+    );
+    
     setupNetworkWorker();
 }
 
@@ -525,6 +529,10 @@ QWidget* MainWindow::createTaskPage()
     QVBoxLayout* layout =
         new QVBoxLayout(page);
 
+    // --------------------------
+    // 标题
+    // --------------------------
+
     QLabel* title =
         new QLabel(
             "Task Monitor"
@@ -535,15 +543,88 @@ QWidget* MainWindow::createTaskPage()
         "font-weight: bold;"
     );
 
-    layout->addWidget(title);
-
     layout->addWidget(
-        new QLabel(
-            "Robot project and task information."
-        )
+        title
     );
 
-    layout->addStretch();
+    // --------------------------
+    // 更新时间
+    // --------------------------
+
+    taskRefreshLabel_ =
+        new QLabel(
+            "Last update: --"
+        );
+
+    layout->addWidget(
+        taskRefreshLabel_
+    );
+
+    // --------------------------
+    // Task 基本状态
+    // --------------------------
+
+    QFormLayout* form =
+        new QFormLayout;
+
+    taskProjectLabel_ =
+        new QLabel(
+            "None"
+        );
+
+    taskCurrentLabel_ =
+        new QLabel(
+            "None"
+        );
+
+    taskStatusLabel_ =
+        new QLabel(
+            "IDLE"
+        );
+
+    form->addRow(
+        "Project:",
+        taskProjectLabel_
+    );
+
+    form->addRow(
+        "Current Task:",
+        taskCurrentLabel_
+    );
+
+    form->addRow(
+        "Status:",
+        taskStatusLabel_
+    );
+
+    layout->addLayout(
+        form
+    );
+
+    // --------------------------
+    // Task List
+    // --------------------------
+
+    QLabel* listTitle =
+        new QLabel(
+            "Task List"
+        );
+
+    listTitle->setStyleSheet(
+        "font-size: 18px;"
+        "font-weight: bold;"
+    );
+
+    layout->addWidget(
+        listTitle
+    );
+
+    taskListWidget_ =
+        new QListWidget;
+
+    layout->addWidget(
+        taskListWidget_
+    );
 
     return page;
 }
@@ -693,6 +774,8 @@ void MainWindow::setupNetworkWorker()
         &NetworkWorker::initialize
     );
 
+    
+
     // --------------------------
     // MainWindow -> NetworkWorker
     // --------------------------
@@ -734,6 +817,13 @@ void MainWindow::setupNetworkWorker()
         &NetworkWorker::ioStateReceived,
         this,
         &MainWindow::onIoStateReceived
+    );
+
+    connect(
+        networkWorker_,
+        &NetworkWorker::taskStateReceived,
+        this,
+        &MainWindow::onTaskStateReceived
     );
 
     connect(
@@ -965,6 +1055,67 @@ void MainWindow::onIoStateReceived(
         );
 
     ioRefreshLabel_->setText(
+        QString(
+            "Last update: %1"
+        )
+        .arg(
+            time.toString(
+                "hh:mm:ss.zzz"
+            )
+        )
+    );
+}
+
+void MainWindow::onTaskStateReceived(
+    const TaskState& state
+)
+{
+    // --------------------------
+    // 工程名称
+    // --------------------------
+
+    taskProjectLabel_->setText(
+        state.projectName
+    );
+
+    // --------------------------
+    // 当前任务
+    // --------------------------
+
+    taskCurrentLabel_->setText(
+        state.currentTask
+    );
+
+    // --------------------------
+    // Task 状态
+    // --------------------------
+
+    taskStatusLabel_->setText(
+        state.status
+    );
+
+    // --------------------------
+    // Task List
+    // --------------------------
+
+    taskListWidget_->clear();
+
+    taskListWidget_->addItems(
+        state.taskList
+    );
+
+    // --------------------------
+    // 更新时间
+    // --------------------------
+
+    const QDateTime time =
+        QDateTime::fromMSecsSinceEpoch(
+            static_cast<qint64>(
+                state.timestampMs
+            )
+        );
+
+    taskRefreshLabel_->setText(
         QString(
             "Last update: %1"
         )

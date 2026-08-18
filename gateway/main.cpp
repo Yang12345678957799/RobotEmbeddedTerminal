@@ -2,6 +2,7 @@
 #include "network/TcpServer.h"
 #include "protocol/ProtocolCodec.h"
 #include "model/IOState.h"
+#include "model/TaskState.h"
 
 #include <chrono>
 #include <cstdint>
@@ -47,6 +48,7 @@ int main()
 
     RobotState state;
     IOState ioState;
+    TaskState taskState;
 
     while (true)
     {
@@ -231,6 +233,49 @@ int main()
                 break;
             }           
 
+
+            // --------------------------
+            // 9. 获取 Task 状态
+            // --------------------------
+
+            if (!backend.readTaskState(taskState))
+            {
+                std::cerr
+                    << "Failed to read TaskState."
+                    << std::endl;
+
+                break;
+            }
+
+
+            // --------------------------
+            // 10. TaskState -> JSON
+            // --------------------------
+
+            const std::string taskJson =
+                ProtocolCodec::taskStateToJson(
+                    taskState
+                );
+
+            const auto taskPacket =
+                ProtocolCodec::packMessage(
+                    taskJson
+                );
+
+
+            // --------------------------
+            // 11. 发给客户端
+            // --------------------------
+
+            if (!server.sendPacket(taskPacket))
+            {
+                std::cout
+                    << "Client disconnected while sending Task."
+                    << std::endl;
+
+                break;
+            }               
+            
             if (frame % 10 == 0)
             {
                 std::cout

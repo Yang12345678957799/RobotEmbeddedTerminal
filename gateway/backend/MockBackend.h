@@ -17,6 +17,8 @@ public:
 
     bool readIOState(IOState& state) override;
 
+    bool readTaskState(TaskState& state) override;
+
 private:
     bool connected_{false};
 

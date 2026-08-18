@@ -471,6 +471,60 @@ void NetworkWorker::handlePayload(
 
         return;
     }
+
+    // ==================================================
+    // Task State
+    // ==================================================
+
+    if (type == "task_state")
+    {
+        const QJsonObject data =
+            root.value(
+                "data"
+            ).toObject();
+
+        TaskState state;
+
+        state.projectName =
+            data.value(
+                "project_name"
+            ).toString();
+
+        const QJsonArray taskList =
+            data.value(
+                "task_list"
+            ).toArray();
+
+        for (const auto& item : taskList)
+        {
+            state.taskList.append(
+                item.toString()
+            );
+        }
+
+        state.currentTask =
+            data.value(
+                "current_task"
+            ).toString();
+
+        state.status =
+            data.value(
+                "status"
+            ).toString();
+
+        state.timestampMs =
+            static_cast<quint64>(
+                data.value(
+                    "timestamp_ms"
+                ).toDouble()
+            );
+
+        emit taskStateReceived(
+            state
+        );
+
+        return;
+    }   
 }
 
 

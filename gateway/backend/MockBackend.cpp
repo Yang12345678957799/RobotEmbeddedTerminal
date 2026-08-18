@@ -136,3 +136,80 @@ bool MockBackend::readIOState(
 
     return true;
 }
+
+bool MockBackend::readTaskState(
+    TaskState& state
+)
+{
+    if (!connected_)
+    {
+        return false;
+    }
+
+    // --------------------------
+    // Mock 工程
+    // --------------------------
+
+    state.projectName =
+        "DemoProject";
+
+    // --------------------------
+    // Mock 任务列表
+    // --------------------------
+
+    state.taskList =
+    {
+        "Home",
+        "Pick",
+        "Place"
+    };
+
+    // simulationTime_ 每 100 ms
+    // 大约增加 0.1
+    const int phase =
+        static_cast<int>(
+            simulationTime_
+        );
+
+    // 每 5 秒切换一次当前任务
+    const int taskIndex =
+        (phase / 5) %
+        static_cast<int>(
+            state.taskList.size()
+        );
+
+    state.currentTask =
+        state.taskList[
+            taskIndex
+        ];
+
+    // 大部分时间运行，
+    // 每 10 秒短暂进入 PAUSED
+    if ((phase % 10) < 8)
+    {
+        state.status =
+            "RUNNING";
+    }
+    else
+    {
+        state.status =
+            "PAUSED";
+    }
+
+    // --------------------------
+    // 时间戳
+    // --------------------------
+
+    const auto now =
+        std::chrono::system_clock::now()
+            .time_since_epoch();
+
+    state.timestampMs =
+        std::chrono::duration_cast<
+            std::chrono::milliseconds>(
+                now
+            )
+            .count();
+
+    return true;
+}

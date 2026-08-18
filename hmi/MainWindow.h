@@ -2,6 +2,7 @@
 
 #include "model/RobotState.h"
 #include "model/IOState.h"
+#include "model/TaskState.h"
 
 #include <QMainWindow>
 #include <QString>
@@ -51,7 +52,11 @@ private slots:
     );
 
     void onIoStateReceived(
-    const IOState& state
+        const IOState& state
+    );
+
+    void onTaskStateReceived(
+        const TaskState& state
     );
 
     void onNetworkLog(
@@ -131,6 +136,30 @@ private:
         nullptr
     };
 
+    // --------------------------
+    // Task 页面
+    // --------------------------
+
+    QLabel* taskProjectLabel_{
+        nullptr
+    };
+
+    QLabel* taskCurrentLabel_{
+        nullptr
+    };
+
+    QLabel* taskStatusLabel_{
+        nullptr
+    };
+
+    QLabel* taskRefreshLabel_{
+        nullptr
+    };
+
+    QListWidget* taskListWidget_{
+        nullptr
+    };
+    
     // --------------------------
     // Setting 页面
     // --------------------------

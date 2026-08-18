@@ -2,6 +2,7 @@
 
 #include "model/RobotState.h"
 #include "model/IOState.h"
+#include "model/TaskState.h"
 
 #include <cstdint>
 #include <string>
@@ -16,6 +17,10 @@ public:
 
     static std::string ioStateToJson(
         const IOState& state
+    );
+
+    static std::string taskStateToJson(
+        const TaskState& state
     );
 
     static std::vector<std::uint8_t> packMessage(

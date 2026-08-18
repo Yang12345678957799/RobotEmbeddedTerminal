@@ -56,6 +56,43 @@ std::string ProtocolCodec::ioStateToJson(
 }
 
 
+std::string ProtocolCodec::taskStateToJson(
+    const TaskState& state
+)
+{
+    nlohmann::json json;
+
+    json["type"] =
+        "task_state";
+
+    json["data"] =
+    {
+        {
+            "project_name",
+            state.projectName
+        },
+        {
+            "task_list",
+            state.taskList
+        },
+        {
+            "current_task",
+            state.currentTask
+        },
+        {
+            "status",
+            state.status
+        },
+        {
+            "timestamp_ms",
+            state.timestampMs
+        }
+    };
+
+    return json.dump();
+}
+
+
 std::vector<std::uint8_t> ProtocolCodec::packMessage(
     const std::string& payload)
 {
