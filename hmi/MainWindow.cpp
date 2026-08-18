@@ -1,12 +1,18 @@
 #include "MainWindow.h"
+#include "network/NetworkWorker.h"
 
+#include <QDebug>
 #include <QFormLayout>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QLineEdit>
 #include <QListWidget>
+#include <QMetaObject>
 #include <QPushButton>
+#include <QSpinBox>
 #include <QStackedWidget>
+#include <QThread>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -115,7 +121,32 @@ MainWindow::MainWindow(QWidget *parent)
     navigationList_->setCurrentRow(
         0
     );
+
+        qRegisterMetaType<RobotState>(
+        "RobotState"
+    );
+
+    setupNetworkWorker();
 }
+
+MainWindow::~MainWindow()
+{
+    if (networkThread_ != nullptr &&
+        networkThread_->isRunning())
+    {
+        QMetaObject::invokeMethod(
+            networkWorker_,
+            "disconnectServer",
+            Qt::BlockingQueuedConnection
+        );
+
+        networkThread_->quit();
+
+        networkThread_->wait();
+    }
+}
+
+
 
 
 QWidget* MainWindow::createStatusPage()
@@ -439,42 +470,70 @@ QWidget* MainWindow::createSettingPage()
         "font-weight: bold;"
     );
 
-    layout->addWidget(title);
+    layout->addWidget(
+        title
+    );
 
     QFormLayout* form =
         new QFormLayout;
 
-    QLabel* ip =
-        new QLabel(
-            "127.0.0.1"
-        );
+    // --------------------------
+    // Gateway IP
+    // --------------------------
 
-    QLabel* port =
-        new QLabel(
-            "9000"
+    gatewayIpEdit_ =
+        new QLineEdit(
+            "127.0.0.1"
         );
 
     form->addRow(
         "Gateway IP:",
-        ip
+        gatewayIpEdit_
+    );
+
+    // --------------------------
+    // Gateway Port
+    // --------------------------
+
+    gatewayPortSpin_ =
+        new QSpinBox;
+
+    gatewayPortSpin_->setRange(
+        1,
+        65535
+    );
+
+    gatewayPortSpin_->setValue(
+        9000
     );
 
     form->addRow(
         "Gateway Port:",
-        port
+        gatewayPortSpin_
     );
 
     layout->addLayout(
         form
     );
 
-    QPushButton* connectButton =
+    // --------------------------
+    // Connect 按钮
+    // --------------------------
+
+    connectButton_ =
         new QPushButton(
             "Connect"
         );
 
+    connect(
+        connectButton_,
+        &QPushButton::clicked,
+        this,
+        &MainWindow::onConnectButtonClicked
+    );
+
     layout->addWidget(
-        connectButton
+        connectButton_
     );
 
     layout->addStretch();
@@ -482,5 +541,241 @@ QWidget* MainWindow::createSettingPage()
     return page;
 }
 
+void MainWindow::setupNetworkWorker()
+{
+    networkThread_ =
+        new QThread(this);
+
+    networkWorker_ =
+        new NetworkWorker;
+
+    networkWorker_->moveToThread(
+        networkThread_
+    );
+
+    // --------------------------
+    // 线程启动后初始化 socket
+    // --------------------------
+
+    connect(
+        networkThread_,
+        &QThread::started,
+        networkWorker_,
+        &NetworkWorker::initialize
+    );
+
+    // --------------------------
+    // MainWindow -> NetworkWorker
+    // --------------------------
+
+    connect(
+        this,
+        &MainWindow::connectGatewayRequested,
+        networkWorker_,
+        &NetworkWorker::connectServer
+    );
+
+    connect(
+        this,
+        &MainWindow::disconnectGatewayRequested,
+        networkWorker_,
+        &NetworkWorker::disconnectServer
+    );
+
+    // --------------------------
+    // NetworkWorker -> MainWindow
+    // --------------------------
+
+    connect(
+        networkWorker_,
+        &NetworkWorker::connectionChanged,
+        this,
+        &MainWindow::onConnectionChanged
+    );
+
+    connect(
+        networkWorker_,
+        &NetworkWorker::robotStateReceived,
+        this,
+        &MainWindow::onRobotStateReceived
+    );
+
+    connect(
+        networkWorker_,
+        &NetworkWorker::logMessage,
+        this,
+        &MainWindow::onNetworkLog
+    );
+
+    // --------------------------
+    // Worker释放
+    // --------------------------
+
+    connect(
+        networkThread_,
+        &QThread::finished,
+        networkWorker_,
+        &QObject::deleteLater
+    );
+
+    networkThread_->start();
+}
+
+void MainWindow::onConnectButtonClicked()
+{
+    if (gatewayConnected_)
+    {
+        emit disconnectGatewayRequested();
+
+        return;
+    }
+
+    const QString ip =
+        gatewayIpEdit_->text().trimmed();
+
+    const quint16 port =
+        static_cast<quint16>(
+            gatewayPortSpin_->value()
+        );
+
+    emit connectGatewayRequested(
+        ip,
+        port
+    );
+}
+
+void MainWindow::onConnectionChanged(
+    bool connected
+)
+{
+    gatewayConnected_ =
+        connected;
+
+    if (connected)
+    {
+        connectionLabel_->setText(
+            "ONLINE"
+        );
+
+        connectButton_->setText(
+            "Disconnect"
+        );
+
+        gatewayIpEdit_->setEnabled(
+            false
+        );
+
+        gatewayPortSpin_->setEnabled(
+            false
+        );
+    }
+    else
+    {
+        connectionLabel_->setText(
+            "OFFLINE"
+        );
+
+        connectButton_->setText(
+            "Connect"
+        );
+
+        gatewayIpEdit_->setEnabled(
+            true
+        );
+
+        gatewayPortSpin_->setEnabled(
+            true
+        );
+    }
+}
 
 
+void MainWindow::onRobotStateReceived(
+    const RobotState& state
+)
+{
+    // --------------------------
+    // J1 ~ J6
+    // --------------------------
+
+    for (int i = 0; i < 6; ++i)
+    {
+        jointLabels_[i]->setText(
+            QString(
+                "%1 deg"
+            )
+            .arg(
+                state.joint[i],
+                0,
+                'f',
+                2
+            )
+        );
+    }
+
+    // --------------------------
+    // TCP Pose
+    // --------------------------
+
+    for (int i = 0; i < 6; ++i)
+    {
+        poseLabels_[i]->setText(
+            QString::number(
+                state.pose[i],
+                'f',
+                2
+            )
+        );
+    }
+
+    // --------------------------
+    // 其他机器人状态
+    // --------------------------
+
+    modeLabel_->setText(
+        state.mode
+    );
+
+    taskLabel_->setText(
+        state.task
+    );
+
+    xcoreLabel_->setText(
+        state.xcoreRunning
+            ? "Running"
+            : "Stopped"
+    );
+
+    cpuLabel_->setText(
+        QString(
+            "%1 %"
+        )
+        .arg(
+            state.cpuUsage,
+            0,
+            'f',
+            1
+        )
+    );
+
+    memoryLabel_->setText(
+        QString(
+            "%1 %"
+        )
+        .arg(
+            state.memoryUsage,
+            0,
+            'f',
+            1
+        )
+    );
+}
+
+void MainWindow::onNetworkLog(
+    const QString& message
+)
+{
+    qDebug()
+        << "[Network]"
+        << message;
+}

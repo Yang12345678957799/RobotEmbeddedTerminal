@@ -48,8 +48,14 @@ add_executable(
     robot_hmi
 
     hmi/main.cpp
+
     hmi/MainWindow.cpp
     hmi/MainWindow.h
+
+    hmi/model/RobotState.h
+
+    hmi/network/NetworkWorker.cpp
+    hmi/network/NetworkWorker.h
 )
 
 target_include_directories(
