@@ -1,6 +1,7 @@
 #pragma once
 
 #include "model/RobotState.h"
+#include "model/IOState.h"
 
 class RobotBackend
 {
@@ -14,4 +15,6 @@ public:
     virtual bool isConnected() const = 0;
 
     virtual bool readRobotState(RobotState& state) = 0;
+
+    virtual bool readIOState(IOState& state) = 0;
 };

@@ -15,6 +15,8 @@ public:
 
     bool readRobotState(RobotState& state) override;
 
+    bool readIOState(IOState& state) override;
+
 private:
     bool connected_{false};
 

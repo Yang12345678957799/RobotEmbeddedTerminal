@@ -1,6 +1,7 @@
 #pragma once
 
 #include "model/RobotState.h"
+#include "model/IOState.h"
 
 #include <QObject>
 #include <QByteArray>
@@ -53,6 +54,11 @@ signals:
     // 收到新的机器人状态
     void robotStateReceived(
         const RobotState& state
+    );
+
+    // 收到新的 IO 状态
+    void ioStateReceived(
+        const IOState& state
     );
 
     // 调试日志

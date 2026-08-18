@@ -71,3 +71,68 @@ bool MockBackend::readRobotState(RobotState& state)
 
     return true;
 }
+
+
+bool MockBackend::readIOState(
+    IOState& state
+)
+{
+    if (!connected_)
+    {
+        return false;
+    }
+
+    // simulationTime_ 已经由 readRobotState()
+    // 每100ms增加0.1
+    //
+    // phase 大约每1秒变化一次
+    const int phase =
+        static_cast<int>(
+            simulationTime_
+        );
+
+    // --------------------------
+    // 模拟 DI0 ~ DI7
+    // --------------------------
+
+    for (std::size_t i = 0;
+         i < state.di.size();
+         ++i)
+    {
+        state.di[i] =
+            ((phase +
+              static_cast<int>(i))
+             % 2) == 0;
+    }
+
+    // --------------------------
+    // 模拟 DO0 ~ DO7
+    // --------------------------
+
+    for (std::size_t i = 0;
+         i < state.dout.size();
+         ++i)
+    {
+        state.dout[i] =
+            (((phase / 2) +
+              static_cast<int>(i))
+             % 2) == 0;
+    }
+
+    // --------------------------
+    // 时间戳
+    // --------------------------
+
+    const auto now =
+        std::chrono::system_clock::now()
+            .time_since_epoch();
+
+    state.timestampMs =
+        std::chrono::duration_cast<
+            std::chrono::milliseconds>(
+                now
+            )
+            .count();
+
+    return true;
+}

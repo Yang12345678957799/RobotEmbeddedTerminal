@@ -27,8 +27,14 @@ add_executable(
     robot_gateway
 
     gateway/main.cpp
+
     gateway/backend/MockBackend.cpp
+
+    gateway/model/RobotState.h
+    gateway/model/IOState.h
+
     gateway/protocol/ProtocolCodec.cpp
+
     gateway/network/TcpServer.cpp
 )
 
@@ -53,6 +59,7 @@ add_executable(
     hmi/MainWindow.h
 
     hmi/model/RobotState.h
+    hmi/model/IOState.h
 
     hmi/network/NetworkWorker.cpp
     hmi/network/NetworkWorker.h

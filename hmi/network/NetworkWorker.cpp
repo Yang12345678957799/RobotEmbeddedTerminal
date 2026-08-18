@@ -332,91 +332,148 @@ void NetworkWorker::handlePayload(
         return;
     }
 
-    // --------------------------
-    // RobotState
-    // --------------------------
+    // ==================================================
+    // Robot State
+    // ==================================================
 
-    if (type != "robot_state")
+    if (type == "robot_state")
     {
+        const QJsonObject data =
+            root.value(
+                "data"
+            ).toObject();
+
+        RobotState state;
+
+        state.connected =
+            data.value(
+                "connected"
+            ).toBool();
+
+        const QJsonArray joint =
+            data.value(
+                "joint"
+            ).toArray();
+
+        for (int i = 0;
+            i < 6 &&
+            i < joint.size();
+            ++i)
+        {
+            state.joint[i] =
+                joint.at(i).toDouble();
+        }
+
+        const QJsonArray pose =
+            data.value(
+                "pose"
+            ).toArray();
+
+        for (int i = 0;
+            i < 6 &&
+            i < pose.size();
+            ++i)
+        {
+            state.pose[i] =
+                pose.at(i).toDouble();
+        }
+
+        state.mode =
+            data.value(
+                "mode"
+            ).toString();
+
+        state.task =
+            data.value(
+                "task"
+            ).toString();
+
+        state.xcoreRunning =
+            data.value(
+                "xcore_running"
+            ).toBool();
+
+        state.cpuUsage =
+            data.value(
+                "cpu_usage"
+            ).toDouble();
+
+        state.memoryUsage =
+            data.value(
+                "memory_usage"
+            ).toDouble();
+
+        state.timestampMs =
+            static_cast<quint64>(
+                data.value(
+                    "timestamp_ms"
+                ).toDouble()
+            );
+
+        emit robotStateReceived(
+            state
+        );
+
         return;
     }
 
-    const QJsonObject data =
-        root.value(
-            "data"
-        ).toObject();
+    // ==================================================
+    // IO State
+    // ==================================================
 
-    RobotState state;
-
-    state.connected =
-        data.value(
-            "connected"
-        ).toBool();
-
-    const QJsonArray joint =
-        data.value(
-            "joint"
-        ).toArray();
-
-    for (int i = 0;
-         i < 6 &&
-         i < joint.size();
-         ++i)
+    if (type == "io_state")
     {
-        state.joint[i] =
-            joint.at(i).toDouble();
-    }
+        const QJsonObject data =
+            root.value(
+                "data"
+            ).toObject();
 
-    const QJsonArray pose =
-        data.value(
-            "pose"
-        ).toArray();
+        IOState state;
 
-    for (int i = 0;
-         i < 6 &&
-         i < pose.size();
-         ++i)
-    {
-        state.pose[i] =
-            pose.at(i).toDouble();
-    }
-
-    state.mode =
-        data.value(
-            "mode"
-        ).toString();
-
-    state.task =
-        data.value(
-            "task"
-        ).toString();
-
-    state.xcoreRunning =
-        data.value(
-            "xcore_running"
-        ).toBool();
-
-    state.cpuUsage =
-        data.value(
-            "cpu_usage"
-        ).toDouble();
-
-    state.memoryUsage =
-        data.value(
-            "memory_usage"
-        ).toDouble();
-
-    state.timestampMs =
-        static_cast<quint64>(
+        const QJsonArray di =
             data.value(
-                "timestamp_ms"
-            ).toDouble()
+                "di"
+            ).toArray();
+
+        for (int i = 0;
+            i < 8 &&
+            i < di.size();
+            ++i)
+        {
+            state.di[i] =
+                di.at(i).toBool();
+        }
+
+        const QJsonArray dout =
+            data.value(
+                "do"
+            ).toArray();
+
+        for (int i = 0;
+            i < 8 &&
+            i < dout.size();
+            ++i)
+        {
+            state.dout[i] =
+                dout.at(i).toBool();
+        }
+
+        state.timestampMs =
+            static_cast<quint64>(
+                data.value(
+                    "timestamp_ms"
+                ).toDouble()
+            );
+
+        emit ioStateReceived(
+            state
         );
 
-    emit robotStateReceived(
-        state
-    );
+        return;
+    }
 }
+
+
 
 
 // ==================================================

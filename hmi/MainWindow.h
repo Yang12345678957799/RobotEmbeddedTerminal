@@ -1,6 +1,7 @@
 #pragma once
 
 #include "model/RobotState.h"
+#include "model/IOState.h"
 
 #include <QMainWindow>
 #include <QString>
@@ -47,6 +48,10 @@ private slots:
 
     void onRobotStateReceived(
         const RobotState& state
+    );
+
+    void onIoStateReceived(
+    const IOState& state
     );
 
     void onNetworkLog(
@@ -110,6 +115,19 @@ private:
     };
 
     QLabel* memoryLabel_{
+        nullptr
+    };
+
+ 
+    // --------------------------
+    // IO 页面
+    // --------------------------
+
+    QLabel* diLabels_[8]{};
+
+    QLabel* doLabels_[8]{};
+
+    QLabel* ioRefreshLabel_{
         nullptr
     };
 

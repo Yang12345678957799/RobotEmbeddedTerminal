@@ -27,6 +27,35 @@ std::string ProtocolCodec::robotStateToJson(
     return json.dump();
 }
 
+std::string ProtocolCodec::ioStateToJson(
+    const IOState& state
+)
+{
+    nlohmann::json json;
+
+    json["type"] =
+        "io_state";
+
+    json["data"] =
+    {
+        {
+            "di",
+            state.di
+        },
+        {
+            "do",
+            state.dout
+        },
+        {
+            "timestamp_ms",
+            state.timestampMs
+        }
+    };
+
+    return json.dump();
+}
+
+
 std::vector<std::uint8_t> ProtocolCodec::packMessage(
     const std::string& payload)
 {

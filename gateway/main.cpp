@@ -1,6 +1,7 @@
 #include "backend/MockBackend.h"
 #include "network/TcpServer.h"
 #include "protocol/ProtocolCodec.h"
+#include "model/IOState.h"
 
 #include <chrono>
 #include <cstdint>
@@ -45,6 +46,7 @@ int main()
     }
 
     RobotState state;
+    IOState ioState;
 
     while (true)
     {
@@ -185,6 +187,49 @@ int main()
 
                 break;
             }
+
+
+            // --------------------------
+            // 6. 获取 IO 状态
+            // --------------------------
+
+            if (!backend.readIOState(ioState))
+            {
+                std::cerr
+                    << "Failed to read IOState."
+                    << std::endl;
+
+                break;
+            }
+
+
+            // --------------------------
+            // 7. IOState -> JSON
+            // --------------------------
+
+            const std::string ioJson =
+                ProtocolCodec::ioStateToJson(
+                    ioState
+                );
+
+            const auto ioPacket =
+                ProtocolCodec::packMessage(
+                    ioJson
+                );
+
+
+            // --------------------------
+            // 8. 发给客户端
+            // --------------------------
+
+            if (!server.sendPacket(ioPacket))
+            {
+                std::cout
+                    << "Client disconnected while sending IO."
+                    << std::endl;
+
+                break;
+            }           
 
             if (frame % 10 == 0)
             {

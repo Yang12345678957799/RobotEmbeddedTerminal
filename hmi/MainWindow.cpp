@@ -15,6 +15,7 @@
 #include <QThread>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -124,6 +125,10 @@ MainWindow::MainWindow(QWidget *parent)
 
         qRegisterMetaType<RobotState>(
         "RobotState"
+    );
+
+        qRegisterMetaType<IOState>(
+            "IOState"
     );
 
     setupNetworkWorker();
@@ -364,6 +369,10 @@ QWidget* MainWindow::createIoPage()
     QVBoxLayout* layout =
         new QVBoxLayout(page);
 
+    // ==========================
+    // 标题
+    // ==========================
+
     QLabel* title =
         new QLabel(
             "IO Monitor"
@@ -374,12 +383,132 @@ QWidget* MainWindow::createIoPage()
         "font-weight: bold;"
     );
 
-    layout->addWidget(title);
+    layout->addWidget(
+        title
+    );
+
+
+    // ==========================
+    // 刷新状态
+    // ==========================
+
+    ioRefreshLabel_ =
+        new QLabel(
+            "Last update: --"
+        );
 
     layout->addWidget(
+        ioRefreshLabel_
+    );
+
+
+    // ==========================
+    // Digital Input
+    // ==========================
+
+    QLabel* diTitle =
         new QLabel(
-            "DI / DO data will be displayed here."
-        )
+            "Digital Input"
+        );
+
+    diTitle->setStyleSheet(
+        "font-size: 18px;"
+        "font-weight: bold;"
+    );
+
+    layout->addWidget(
+        diTitle
+    );
+
+    QGridLayout* diLayout =
+        new QGridLayout;
+
+    for (int i = 0;
+         i < 8;
+         ++i)
+    {
+        QLabel* name =
+            new QLabel(
+                QString(
+                    "DI%1"
+                ).arg(i)
+            );
+
+        diLabels_[i] =
+            new QLabel(
+                "OFF"
+            );
+
+        diLayout->addWidget(
+            name,
+            i / 4,
+            (i % 4) * 2
+        );
+
+        diLayout->addWidget(
+            diLabels_[i],
+            i / 4,
+            (i % 4) * 2 + 1
+        );
+    }
+
+    layout->addLayout(
+        diLayout
+    );
+
+
+    // ==========================
+    // Digital Output
+    // ==========================
+
+    QLabel* doTitle =
+        new QLabel(
+            "Digital Output"
+        );
+
+    doTitle->setStyleSheet(
+        "font-size: 18px;"
+        "font-weight: bold;"
+    );
+
+    layout->addWidget(
+        doTitle
+    );
+
+    QGridLayout* doLayout =
+        new QGridLayout;
+
+    for (int i = 0;
+         i < 8;
+         ++i)
+    {
+        QLabel* name =
+            new QLabel(
+                QString(
+                    "DO%1"
+                ).arg(i)
+            );
+
+        doLabels_[i] =
+            new QLabel(
+                "OFF"
+            );
+
+        doLayout->addWidget(
+            name,
+            i / 4,
+            (i % 4) * 2
+        );
+
+        doLayout->addWidget(
+            doLabels_[i],
+            i / 4,
+            (i % 4) * 2 + 1
+        );
+    }
+
+    layout->addLayout(
+        doLayout
     );
 
     layout->addStretch();
@@ -602,6 +731,13 @@ void MainWindow::setupNetworkWorker()
 
     connect(
         networkWorker_,
+        &NetworkWorker::ioStateReceived,
+        this,
+        &MainWindow::onIoStateReceived
+    );
+
+    connect(
+        networkWorker_,
         &NetworkWorker::logMessage,
         this,
         &MainWindow::onNetworkLog
@@ -778,4 +914,64 @@ void MainWindow::onNetworkLog(
     qDebug()
         << "[Network]"
         << message;
+}
+
+
+void MainWindow::onIoStateReceived(
+    const IOState& state
+)
+{
+    // --------------------------
+    // DI0 ~ DI7
+    // --------------------------
+
+    for (int i = 0;
+         i < 8;
+         ++i)
+    {
+        diLabels_[i]->setText(
+            state.di[i]
+                ? "ON"
+                : "OFF"
+        );
+    }
+
+
+    // --------------------------
+    // DO0 ~ DO7
+    // --------------------------
+
+    for (int i = 0;
+         i < 8;
+         ++i)
+    {
+        doLabels_[i]->setText(
+            state.dout[i]
+                ? "ON"
+                : "OFF"
+        );
+    }
+
+
+    // --------------------------
+    // 显示最后更新时间
+    // --------------------------
+
+    const QDateTime time =
+        QDateTime::fromMSecsSinceEpoch(
+            static_cast<qint64>(
+                state.timestampMs
+            )
+        );
+
+    ioRefreshLabel_->setText(
+        QString(
+            "Last update: %1"
+        )
+        .arg(
+            time.toString(
+                "hh:mm:ss.zzz"
+            )
+        )
+    );
 }
