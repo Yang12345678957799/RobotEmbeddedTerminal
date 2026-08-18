@@ -33,6 +33,7 @@ add_executable(
     gateway/model/RobotState.h
     gateway/model/IOState.h
     gateway/model/TaskState.h
+    gateway/model/AlarmEvent.h
 
     gateway/protocol/ProtocolCodec.cpp
 
@@ -62,6 +63,7 @@ add_executable(
     hmi/model/RobotState.h
     hmi/model/IOState.h
     hmi/model/TaskState.h
+    hmi/model/AlarmEvent.h
 
     hmi/network/NetworkWorker.cpp
     hmi/network/NetworkWorker.h

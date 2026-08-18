@@ -92,6 +92,46 @@ std::string ProtocolCodec::taskStateToJson(
     return json.dump();
 }
 
+std::string ProtocolCodec::alarmEventToJson(
+    const AlarmEvent& event
+)
+{
+    nlohmann::json json;
+
+    json["type"] =
+        "log_event";
+
+    json["data"] =
+    {
+        {
+            "id",
+            event.id
+        },
+        {
+            "level",
+            event.level
+        },
+        {
+            "code",
+            event.code
+        },
+        {
+            "message",
+            event.message
+        },
+        {
+            "active",
+            event.active
+        },
+        {
+            "timestamp_ms",
+            event.timestampMs
+        }
+    };
+
+    return json.dump();
+}
+
 
 std::vector<std::uint8_t> ProtocolCodec::packMessage(
     const std::string& payload)

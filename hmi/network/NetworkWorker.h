@@ -3,6 +3,7 @@
 #include "model/RobotState.h"
 #include "model/IOState.h"
 #include "model/TaskState.h"
+#include "model/AlarmEvent.h"
 
 #include <QObject>
 #include <QByteArray>
@@ -64,6 +65,10 @@ signals:
 
     void taskStateReceived(
         const TaskState& state
+    );
+
+    void alarmEventReceived(
+        const AlarmEvent& event
     );
 
     // 调试日志

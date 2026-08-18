@@ -3,6 +3,7 @@
 #include "model/RobotState.h"
 #include "model/IOState.h"
 #include "model/TaskState.h"
+#include "model/AlarmEvent.h"
 
 #include <cstdint>
 #include <string>
@@ -21,6 +22,10 @@ public:
 
     static std::string taskStateToJson(
         const TaskState& state
+    );
+
+    static std::string alarmEventToJson(
+        const AlarmEvent& event
     );
 
     static std::vector<std::uint8_t> packMessage(

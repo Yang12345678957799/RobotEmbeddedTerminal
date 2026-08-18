@@ -3,6 +3,7 @@
 #include "model/RobotState.h"
 #include "model/IOState.h"
 #include "model/TaskState.h"
+#include "model/AlarmEvent.h"
 
 #include <QMainWindow>
 #include <QString>
@@ -15,6 +16,7 @@ class QLineEdit;
 class QSpinBox;
 class QPushButton;
 class QThread;
+class QTableWidget;
 
 class NetworkWorker;
 
@@ -57,6 +59,10 @@ private slots:
 
     void onTaskStateReceived(
         const TaskState& state
+    );
+
+    void onAlarmEventReceived(
+        const AlarmEvent& event
     );
 
     void onNetworkLog(
@@ -159,7 +165,19 @@ private:
     QListWidget* taskListWidget_{
         nullptr
     };
-    
+
+    // --------------------------
+    // Alarm 页面
+    // --------------------------
+
+    QTableWidget* alarmTable_{
+        nullptr
+    };
+
+    QLabel* alarmRefreshLabel_{
+        nullptr
+    };
+
     // --------------------------
     // Setting 页面
     // --------------------------

@@ -10,7 +10,12 @@ MockBackend::MockBackend()
 bool MockBackend::connect()
 {
     connected_ = true;
+
     simulationTime_ = 0.0;
+
+    lastAlarmBucket_ = 0;
+
+    nextAlarmId_ = 1;
 
     return true;
 }
@@ -205,6 +210,86 @@ bool MockBackend::readTaskState(
             .time_since_epoch();
 
     state.timestampMs =
+        std::chrono::duration_cast<
+            std::chrono::milliseconds>(
+                now
+            )
+            .count();
+
+    return true;
+}
+
+bool MockBackend::pollAlarmEvent(
+    AlarmEvent& event
+)
+{
+    if (!connected_)
+    {
+        return false;
+    }
+
+    // 每大约 5 秒进入一个新的 bucket
+    const int alarmBucket =
+        static_cast<int>(
+            simulationTime_ / 5.0
+        );
+
+    // 还没到第一个报警时间
+    if (alarmBucket <= 0)
+    {
+        return false;
+    }
+
+    // 当前 5 秒区间已经发过一次，
+    // 不重复发送
+    if (alarmBucket ==
+        lastAlarmBucket_)
+    {
+        return false;
+    }
+
+    lastAlarmBucket_ =
+        alarmBucket;
+
+    event.id =
+        nextAlarmId_++;
+
+    // 奇数 bucket 模拟报警
+    if ((alarmBucket % 2) != 0)
+    {
+        event.level =
+            "WARNING";
+
+        event.code =
+            "MOCK_001";
+
+        event.message =
+            "Mock robot warning.";
+
+        event.active =
+            true;
+    }
+    else
+    {
+        // 偶数 bucket 模拟报警恢复
+        event.level =
+            "INFO";
+
+        event.code =
+            "MOCK_001";
+
+        event.message =
+            "Mock robot warning cleared.";
+
+        event.active =
+            false;
+    }
+
+    const auto now =
+        std::chrono::system_clock::now()
+            .time_since_epoch();
+
+    event.timestampMs =
         std::chrono::duration_cast<
             std::chrono::milliseconds>(
                 now

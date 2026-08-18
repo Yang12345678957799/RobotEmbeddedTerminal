@@ -524,7 +524,61 @@ void NetworkWorker::handlePayload(
         );
 
         return;
-    }   
+    }
+    
+    // ==================================================
+    // Alarm / Log Event
+    // ==================================================
+
+    if (type == "log_event")
+    {
+        const QJsonObject data =
+            root.value(
+                "data"
+            ).toObject();
+
+        AlarmEvent event;
+
+        event.id =
+            static_cast<quint64>(
+                data.value(
+                    "id"
+                ).toDouble()
+            );
+
+        event.level =
+            data.value(
+                "level"
+            ).toString();
+
+        event.code =
+            data.value(
+                "code"
+            ).toString();
+
+        event.message =
+            data.value(
+                "message"
+            ).toString();
+
+        event.active =
+            data.value(
+                "active"
+            ).toBool();
+
+        event.timestampMs =
+            static_cast<quint64>(
+                data.value(
+                    "timestamp_ms"
+                ).toDouble()
+            );
+
+        emit alarmEventReceived(
+            event
+        );
+
+        return;
+    }
 }
 
 

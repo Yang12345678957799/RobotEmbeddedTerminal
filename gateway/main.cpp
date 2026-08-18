@@ -3,6 +3,7 @@
 #include "protocol/ProtocolCodec.h"
 #include "model/IOState.h"
 #include "model/TaskState.h"
+#include "model/AlarmEvent.h"
 
 #include <chrono>
 #include <cstdint>
@@ -49,6 +50,7 @@ int main()
     RobotState state;
     IOState ioState;
     TaskState taskState;
+    AlarmEvent alarmEvent;
 
     while (true)
     {
@@ -275,6 +277,36 @@ int main()
 
                 break;
             }               
+            
+            // --------------------------
+            // 12. 检查 Alarm Event
+            // --------------------------
+
+            if (backend.pollAlarmEvent(
+                    alarmEvent
+                ))
+            {
+                const std::string alarmJson =
+                    ProtocolCodec::alarmEventToJson(
+                        alarmEvent
+                    );
+
+                const auto alarmPacket =
+                    ProtocolCodec::packMessage(
+                        alarmJson
+                    );
+
+                if (!server.sendPacket(
+                        alarmPacket
+                    ))
+                {
+                    std::cout
+                        << "Client disconnected while sending Alarm."
+                        << std::endl;
+
+                    break;
+                }
+            }
             
             if (frame % 10 == 0)
             {

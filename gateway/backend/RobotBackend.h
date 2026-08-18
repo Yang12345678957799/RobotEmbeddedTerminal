@@ -3,6 +3,7 @@
 #include "model/RobotState.h"
 #include "model/IOState.h"
 #include "model/TaskState.h"
+#include "model/AlarmEvent.h"
 
 class RobotBackend
 {
@@ -20,5 +21,7 @@ public:
     virtual bool readIOState(IOState& state) = 0;
 
     virtual bool readTaskState(TaskState& state)=0;
+
+    virtual bool pollAlarmEvent(AlarmEvent& event) = 0;
     
 };

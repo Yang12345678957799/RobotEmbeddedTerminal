@@ -16,6 +16,9 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QDateTime>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+#include <QHeaderView>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -133,6 +136,10 @@ MainWindow::MainWindow(QWidget *parent)
 
         qRegisterMetaType<TaskState>(
             "TaskState"
+    );
+
+        qRegisterMetaType<AlarmEvent>(
+            "AlarmEvent"
     );
     
     setupNetworkWorker();
@@ -638,9 +645,13 @@ QWidget* MainWindow::createAlarmPage()
     QVBoxLayout* layout =
         new QVBoxLayout(page);
 
+    // --------------------------
+    // 标题
+    // --------------------------
+
     QLabel* title =
         new QLabel(
-            "Alarm"
+            "Alarm Monitor"
         );
 
     title->setStyleSheet(
@@ -648,15 +659,53 @@ QWidget* MainWindow::createAlarmPage()
         "font-weight: bold;"
     );
 
-    layout->addWidget(title);
-
     layout->addWidget(
-        new QLabel(
-            "Robot alarm and event history."
-        )
+        title
     );
 
-    layout->addStretch();
+    // --------------------------
+    // 最近更新时间
+    // --------------------------
+
+    alarmRefreshLabel_ =
+        new QLabel(
+            "Last event: --"
+        );
+
+    layout->addWidget(
+        alarmRefreshLabel_
+    );
+
+    // --------------------------
+    // Alarm 表格
+    // --------------------------
+
+    alarmTable_ =
+        new QTableWidget;
+
+    alarmTable_->setColumnCount(
+        5
+    );
+
+    alarmTable_->setHorizontalHeaderLabels(
+        {
+            "Time",
+            "Level",
+            "Code",
+            "Message",
+            "State"
+        }
+    );
+
+    alarmTable_->
+        horizontalHeader()->
+        setStretchLastSection(
+            true
+        );
+
+    layout->addWidget(
+        alarmTable_
+    );
 
     return page;
 }
@@ -824,6 +873,13 @@ void MainWindow::setupNetworkWorker()
         &NetworkWorker::taskStateReceived,
         this,
         &MainWindow::onTaskStateReceived
+    );
+
+    connect(
+        networkWorker_,
+        &NetworkWorker::alarmEventReceived,
+        this,
+        &MainWindow::onAlarmEventReceived
     );
 
     connect(
@@ -1118,6 +1174,88 @@ void MainWindow::onTaskStateReceived(
     taskRefreshLabel_->setText(
         QString(
             "Last update: %1"
+        )
+        .arg(
+            time.toString(
+                "hh:mm:ss.zzz"
+            )
+        )
+    );
+}
+
+void MainWindow::onAlarmEventReceived(
+    const AlarmEvent& event
+)
+{
+    const QDateTime time =
+        QDateTime::fromMSecsSinceEpoch(
+            static_cast<qint64>(
+                event.timestampMs
+            )
+        );
+
+    // 新事件放最上面
+    alarmTable_->insertRow(
+        0
+    );
+
+    alarmTable_->setItem(
+        0,
+        0,
+        new QTableWidgetItem(
+            time.toString(
+                "hh:mm:ss"
+            )
+        )
+    );
+
+    alarmTable_->setItem(
+        0,
+        1,
+        new QTableWidgetItem(
+            event.level
+        )
+    );
+
+    alarmTable_->setItem(
+        0,
+        2,
+        new QTableWidgetItem(
+            event.code
+        )
+    );
+
+    alarmTable_->setItem(
+        0,
+        3,
+        new QTableWidgetItem(
+            event.message
+        )
+    );
+
+    alarmTable_->setItem(
+        0,
+        4,
+        new QTableWidgetItem(
+            event.active
+                ? "ACTIVE"
+                : "CLEARED"
+        )
+    );
+
+    // 第一版内存中最多保存 100 条
+    while (alarmTable_->rowCount() >
+           100)
+    {
+        alarmTable_->removeRow(
+            alarmTable_->rowCount() -
+            1
+        );
+    }
+
+    alarmRefreshLabel_->setText(
+        QString(
+            "Last event: %1"
         )
         .arg(
             time.toString(
