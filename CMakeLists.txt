@@ -7,18 +7,28 @@ project(
 )
 
 set(CMAKE_CXX_STANDARD 17)
-
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_AUTOMOC ON)
+
+find_package(
+    Qt5
+    REQUIRED
+    COMPONENTS
+    Widgets
+    Network
+)
+
+# ==================================================
+# Gateway
+# ==================================================
 
 add_executable(
     robot_gateway
 
     gateway/main.cpp
-
     gateway/backend/MockBackend.cpp
-
     gateway/protocol/ProtocolCodec.cpp
-
     gateway/network/TcpServer.cpp
 )
 
@@ -28,4 +38,33 @@ target_include_directories(
     PRIVATE
 
     ${CMAKE_CURRENT_SOURCE_DIR}/gateway
+)
+
+# ==================================================
+# PC HMI
+# ==================================================
+
+add_executable(
+    robot_hmi
+
+    hmi/main.cpp
+    hmi/MainWindow.cpp
+    hmi/MainWindow.h
+)
+
+target_include_directories(
+    robot_hmi
+
+    PRIVATE
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/hmi
+)
+
+target_link_libraries(
+    robot_hmi
+
+    PRIVATE
+
+    Qt5::Widgets
+    Qt5::Network
 )
