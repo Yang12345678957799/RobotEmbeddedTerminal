@@ -1,0 +1,46 @@
+========================================
+ RobotEmbeddedTerminal OPC UA Session Probe
+========================================
+Server: opc.tcp://192.168.21.10:4840
+
+[1/3] Connecting OPC UA session...
+Session connection: SUCCESS
+
+[2/3] Reading namespace array...
+Namespace count: 4
+  ns=0: http://opcfoundation.org/UA/
+  ns=1: urn:xcore.opcua.server
+  ns=2: http://opcfoundation.org/UA/DI/
+  ns=3: http://opcfoundation.org/UA/Robotics/
+
+[3/3] Browsing Objects node...
+Objects child count: 6
+
+----------------------------------------
+NodeId: NodeId(Identifier=23470, NamespaceIndex=0, NodeIdType=<NodeIdType.FourByte: 1>)
+BrowseName: QualifiedName(NamespaceIndex=0, Name='Aliases')
+DisplayName: LocalizedText(Locale='', Text='Aliases')
+----------------------------------------
+NodeId: NodeId(Identifier=2253, NamespaceIndex=0, NodeIdType=<NodeIdType.FourByte: 1>)
+BrowseName: QualifiedName(NamespaceIndex=0, Name='Server')
+DisplayName: LocalizedText(Locale='', Text='Server')
+----------------------------------------
+NodeId: NodeId(Identifier=6078, NamespaceIndex=2, NodeIdType=<NodeIdType.FourByte: 1>)
+BrowseName: QualifiedName(NamespaceIndex=2, Name='NetworkSet')
+DisplayName: LocalizedText(Locale='', Text='NetworkSet')
+----------------------------------------
+NodeId: NodeId(Identifier=5001, NamespaceIndex=2, NodeIdType=<NodeIdType.FourByte: 1>)
+BrowseName: QualifiedName(NamespaceIndex=2, Name='DeviceSet')
+DisplayName: LocalizedText(Locale='', Text='DeviceSet')
+----------------------------------------
+NodeId: NodeId(Identifier=6094, NamespaceIndex=2, NodeIdType=<NodeIdType.FourByte: 1>)
+BrowseName: QualifiedName(NamespaceIndex=2, Name='DeviceTopology')
+DisplayName: LocalizedText(Locale='', Text='DeviceTopology')
+----------------------------------------
+NodeId: NodeId(Identifier=58192, NamespaceIndex=1, NodeIdType=<NodeIdType.FourByte: 1>)
+BrowseName: QualifiedName(NamespaceIndex=1, Name='RokaeRobot')
+DisplayName: LocalizedText(Locale='en', Text='RokaeRobot')
+
+========================================
+ Session / Namespace / Browse: SUCCESS
+========================================

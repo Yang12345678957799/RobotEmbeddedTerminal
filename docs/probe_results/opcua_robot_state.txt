@@ -1,0 +1,55 @@
+========================================
+ RobotEmbeddedTerminal
+ OPC UA Robot State Probe
+========================================
+Server: opc.tcp://192.168.21.10:4840
+
+[1/5] Session connected: SUCCESS
+
+[2/5] Controller information
+Robot Model : LocalizedText(Locale='en', Text='NB12s-1214-5A')
+xCore       : 2.2.2
+
+[3/5] Robot mode / safety
+OperationalMode : 1
+ProtectiveStop  : False
+EmergencyStop   : False
+SpeedOverride   : 63.0
+
+[4/5] Joint state
+J1: position=-16.251197613792662, speed=0.0
+J2: position=-27.93094826269427, speed=0.0
+J3: position=-6.551729045658537, speed=0.0
+J4: position=9.191277912193943, speed=0.0
+J5: position=-47.0611106666664, speed=0.0
+J6: position=-42.95009668888881, speed=0.0
+
+[5/5] Task state
+TaskProgramLoaded : True
+TaskProgramName   : 'testyy'
+
+========================================
+OperationalMode DataType metadata
+NodeId: ns=3;i=3006
+========================================
+Child count: 1
+
+Child NodeId: NodeId(Identifier=6022, NamespaceIndex=3, NodeIdType=<NodeIdType.FourByte: 1>)
+BrowseName: EnumStrings
+NodeClass: Variable
+Value: [LocalizedText(Locale='', Text='OTHER'), LocalizedText(Locale='', Text='MANUAL_REDUCED_SPEED'), LocalizedText(Locale='', Text='MANUAL_HIGH_SPEED'), LocalizedText(Locale='', Text='AUTOMATIC'), LocalizedText(Locale='', Text='AUTOMATIC_EXTERNAL')]
+
+========================================
+Axis1 ActualPosition metadata
+NodeId: ns=1;i=54329
+========================================
+Child count: 1
+
+Child NodeId: NodeId(Identifier=54330, NamespaceIndex=1, NodeIdType=<NodeIdType.FourByte: 1>)
+BrowseName: EngineeringUnits
+NodeClass: Variable
+Value: EUInformation(NamespaceUri='http://www.opcfoundation.org/UA/units/un/cefact', UnitId=17476, DisplayName=LocalizedText(Locale='en', Text='°'), Description=LocalizedText(Locale='en', Text='degree [unit of angle]'))
+
+========================================
+ Robot state probe: SUCCESS
+========================================

@@ -1,0 +1,922 @@
+========================================
+ RobotEmbeddedTerminal
+ RokaeRobot OPC UA Tree Probe
+========================================
+Server: opc.tcp://192.168.21.10:4840
+Root Node: ns=1;i=58192
+Max Depth: 6
+Max Nodes: 500
+
+[1/2] OPC UA session connected.
+[2/2] Browsing RokaeRobot tree...
+
+========================================
+Path: /RokaeRobot
+NodeId: ns=1;i=58192
+NodeClass: Object
+BrowseName: RokaeRobot
+DisplayName: RokaeRobot
+
+  ========================================
+  Path: /RokaeRobot/SafetyStates
+  NodeId: ns=1;i=54311
+  NodeClass: Object
+  BrowseName: SafetyStates
+  DisplayName: SafetyStates
+
+    ========================================
+    Path: /RokaeRobot/SafetyStates/SafetyState
+    NodeId: ns=1;i=54432
+    NodeClass: Object
+    BrowseName: SafetyState
+    DisplayName: SafetyState
+
+      ========================================
+      Path: /RokaeRobot/SafetyStates/SafetyState/ParameterSet
+      NodeId: ns=1;i=54433
+      NodeClass: Object
+      BrowseName: ParameterSet
+      DisplayName: ParameterSet
+
+        ========================================
+        Path: /RokaeRobot/SafetyStates/SafetyState/ParameterSet/ProtectiveStop
+        NodeId: ns=1;i=54434
+        NodeClass: Variable
+        BrowseName: ProtectiveStop
+        DisplayName: ProtectiveStop
+        DataType: i=1
+        Value: False
+
+        ========================================
+        Path: /RokaeRobot/SafetyStates/SafetyState/ParameterSet/OperationalMode
+        NodeId: ns=1;i=54435
+        NodeClass: Variable
+        BrowseName: OperationalMode
+        DisplayName: OperationalMode
+        DataType: ns=3;i=3006
+        Value: 1
+
+        ========================================
+        Path: /RokaeRobot/SafetyStates/SafetyState/ParameterSet/EmergencyStop
+        NodeId: ns=1;i=54436
+        NodeClass: Variable
+        BrowseName: EmergencyStop
+        DisplayName: EmergencyStop
+        DataType: i=1
+        Value: False
+
+  ========================================
+  Path: /RokaeRobot/MotionDevices
+  NodeId: ns=1;i=54312
+  NodeClass: Object
+  BrowseName: MotionDevices
+  DisplayName: MotionDevices
+
+    ========================================
+    Path: /RokaeRobot/MotionDevices/Robot
+    NodeId: ns=1;i=54314
+    NodeClass: Object
+    BrowseName: Robot
+    DisplayName: Robot
+
+      ========================================
+      Path: /RokaeRobot/MotionDevices/Robot/ParameterSet
+      NodeId: ns=1;i=54315
+      NodeClass: Object
+      BrowseName: ParameterSet
+      DisplayName: ParameterSet
+
+        ========================================
+        Path: /RokaeRobot/MotionDevices/Robot/ParameterSet/SpeedOverride
+        NodeId: ns=1;i=54316
+        NodeClass: Variable
+        BrowseName: SpeedOverride
+        DisplayName: SpeedOverride
+        DataType: i=11
+        Value: 20.0
+
+      ========================================
+      Path: /RokaeRobot/MotionDevices/Robot/PowerTrains
+      NodeId: ns=1;i=54317
+      NodeClass: Object
+      BrowseName: PowerTrains
+      DisplayName: PowerTrains
+
+        ========================================
+        Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor1
+        NodeId: ns=1;i=54366
+        NodeClass: Object
+        BrowseName: Motor1
+        DisplayName: Motor1
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor1/ParameterSet
+          NodeId: ns=1;i=54367
+          NodeClass: Object
+          BrowseName: ParameterSet
+          DisplayName: ParameterSet
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor1/ParameterSet/MotorTemperature
+            NodeId: ns=1;i=54368
+            NodeClass: Variable
+            BrowseName: MotorTemperature
+            DisplayName: MotorTemperature
+            DataType: i=11
+            Value: 0.0
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor1/ProductCode
+          NodeId: ns=1;i=54370
+          NodeClass: Variable
+          BrowseName: ProductCode
+          DisplayName: ProductCode
+          DataType: i=12
+          Value: None
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor1/SerialNumber
+          NodeId: ns=1;i=54371
+          NodeClass: Variable
+          BrowseName: SerialNumber
+          DisplayName: SerialNumber
+          DataType: i=12
+          Value: None
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor1/Model
+          NodeId: ns=1;i=54372
+          NodeClass: Variable
+          BrowseName: Model
+          DisplayName: Model
+          DataType: i=21
+          Value: LocalizedText(Locale=None, Text=None)
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor1/Manufacturer
+          NodeId: ns=1;i=54373
+          NodeClass: Variable
+          BrowseName: Manufacturer
+          DisplayName: Manufacturer
+          DataType: i=21
+          Value: LocalizedText(Locale=None, Text=None)
+
+        ========================================
+        Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor2
+        NodeId: ns=1;i=54374
+        NodeClass: Object
+        BrowseName: Motor2
+        DisplayName: Motor2
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor2/ParameterSet
+          NodeId: ns=1;i=54375
+          NodeClass: Object
+          BrowseName: ParameterSet
+          DisplayName: ParameterSet
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor2/ParameterSet/MotorTemperature
+            NodeId: ns=1;i=54376
+            NodeClass: Variable
+            BrowseName: MotorTemperature
+            DisplayName: MotorTemperature
+            DataType: i=11
+            Value: 0.0
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor2/ProductCode
+          NodeId: ns=1;i=54378
+          NodeClass: Variable
+          BrowseName: ProductCode
+          DisplayName: ProductCode
+          DataType: i=12
+          Value: None
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor2/SerialNumber
+          NodeId: ns=1;i=54379
+          NodeClass: Variable
+          BrowseName: SerialNumber
+          DisplayName: SerialNumber
+          DataType: i=12
+          Value: None
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor2/Model
+          NodeId: ns=1;i=54380
+          NodeClass: Variable
+          BrowseName: Model
+          DisplayName: Model
+          DataType: i=21
+          Value: LocalizedText(Locale=None, Text=None)
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor2/Manufacturer
+          NodeId: ns=1;i=54381
+          NodeClass: Variable
+          BrowseName: Manufacturer
+          DisplayName: Manufacturer
+          DataType: i=21
+          Value: LocalizedText(Locale=None, Text=None)
+
+        ========================================
+        Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor3
+        NodeId: ns=1;i=54382
+        NodeClass: Object
+        BrowseName: Motor3
+        DisplayName: Motor3
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor3/ParameterSet
+          NodeId: ns=1;i=54383
+          NodeClass: Object
+          BrowseName: ParameterSet
+          DisplayName: ParameterSet
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor3/ParameterSet/MotorTemperature
+            NodeId: ns=1;i=54384
+            NodeClass: Variable
+            BrowseName: MotorTemperature
+            DisplayName: MotorTemperature
+            DataType: i=11
+            Value: 0.0
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor3/ProductCode
+          NodeId: ns=1;i=54386
+          NodeClass: Variable
+          BrowseName: ProductCode
+          DisplayName: ProductCode
+          DataType: i=12
+          Value: None
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor3/SerialNumber
+          NodeId: ns=1;i=54387
+          NodeClass: Variable
+          BrowseName: SerialNumber
+          DisplayName: SerialNumber
+          DataType: i=12
+          Value: None
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor3/Model
+          NodeId: ns=1;i=54388
+          NodeClass: Variable
+          BrowseName: Model
+          DisplayName: Model
+          DataType: i=21
+          Value: LocalizedText(Locale=None, Text=None)
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor3/Manufacturer
+          NodeId: ns=1;i=54389
+          NodeClass: Variable
+          BrowseName: Manufacturer
+          DisplayName: Manufacturer
+          DataType: i=21
+          Value: LocalizedText(Locale=None, Text=None)
+
+        ========================================
+        Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor4
+        NodeId: ns=1;i=54390
+        NodeClass: Object
+        BrowseName: Motor4
+        DisplayName: Motor4
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor4/ParameterSet
+          NodeId: ns=1;i=54391
+          NodeClass: Object
+          BrowseName: ParameterSet
+          DisplayName: ParameterSet
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor4/ParameterSet/MotorTemperature
+            NodeId: ns=1;i=54392
+            NodeClass: Variable
+            BrowseName: MotorTemperature
+            DisplayName: MotorTemperature
+            DataType: i=11
+            Value: 0.0
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor4/ProductCode
+          NodeId: ns=1;i=54394
+          NodeClass: Variable
+          BrowseName: ProductCode
+          DisplayName: ProductCode
+          DataType: i=12
+          Value: None
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor4/SerialNumber
+          NodeId: ns=1;i=54395
+          NodeClass: Variable
+          BrowseName: SerialNumber
+          DisplayName: SerialNumber
+          DataType: i=12
+          Value: None
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor4/Model
+          NodeId: ns=1;i=54396
+          NodeClass: Variable
+          BrowseName: Model
+          DisplayName: Model
+          DataType: i=21
+          Value: LocalizedText(Locale=None, Text=None)
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor4/Manufacturer
+          NodeId: ns=1;i=54397
+          NodeClass: Variable
+          BrowseName: Manufacturer
+          DisplayName: Manufacturer
+          DataType: i=21
+          Value: LocalizedText(Locale=None, Text=None)
+
+        ========================================
+        Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor5
+        NodeId: ns=1;i=54398
+        NodeClass: Object
+        BrowseName: Motor5
+        DisplayName: Motor5
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor5/ParameterSet
+          NodeId: ns=1;i=54399
+          NodeClass: Object
+          BrowseName: ParameterSet
+          DisplayName: ParameterSet
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor5/ParameterSet/MotorTemperature
+            NodeId: ns=1;i=54400
+            NodeClass: Variable
+            BrowseName: MotorTemperature
+            DisplayName: MotorTemperature
+            DataType: i=11
+            Value: 0.0
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor5/ProductCode
+          NodeId: ns=1;i=54402
+          NodeClass: Variable
+          BrowseName: ProductCode
+          DisplayName: ProductCode
+          DataType: i=12
+          Value: None
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor5/SerialNumber
+          NodeId: ns=1;i=54403
+          NodeClass: Variable
+          BrowseName: SerialNumber
+          DisplayName: SerialNumber
+          DataType: i=12
+          Value: None
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor5/Model
+          NodeId: ns=1;i=54404
+          NodeClass: Variable
+          BrowseName: Model
+          DisplayName: Model
+          DataType: i=21
+          Value: LocalizedText(Locale=None, Text=None)
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor5/Manufacturer
+          NodeId: ns=1;i=54405
+          NodeClass: Variable
+          BrowseName: Manufacturer
+          DisplayName: Manufacturer
+          DataType: i=21
+          Value: LocalizedText(Locale=None, Text=None)
+
+        ========================================
+        Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor6
+        NodeId: ns=1;i=54406
+        NodeClass: Object
+        BrowseName: Motor6
+        DisplayName: Motor6
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor6/ParameterSet
+          NodeId: ns=1;i=54407
+          NodeClass: Object
+          BrowseName: ParameterSet
+          DisplayName: ParameterSet
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor6/ParameterSet/MotorTemperature
+            NodeId: ns=1;i=54408
+            NodeClass: Variable
+            BrowseName: MotorTemperature
+            DisplayName: MotorTemperature
+            DataType: i=11
+            Value: 0.0
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor6/ProductCode
+          NodeId: ns=1;i=54410
+          NodeClass: Variable
+          BrowseName: ProductCode
+          DisplayName: ProductCode
+          DataType: i=12
+          Value: None
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor6/SerialNumber
+          NodeId: ns=1;i=54411
+          NodeClass: Variable
+          BrowseName: SerialNumber
+          DisplayName: SerialNumber
+          DataType: i=12
+          Value: None
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor6/Model
+          NodeId: ns=1;i=54412
+          NodeClass: Variable
+          BrowseName: Model
+          DisplayName: Model
+          DataType: i=21
+          Value: LocalizedText(Locale=None, Text=None)
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/PowerTrains/Motor6/Manufacturer
+          NodeId: ns=1;i=54413
+          NodeClass: Variable
+          BrowseName: Manufacturer
+          DisplayName: Manufacturer
+          DataType: i=21
+          Value: LocalizedText(Locale=None, Text=None)
+
+      ========================================
+      Path: /RokaeRobot/MotionDevices/Robot/Axes
+      NodeId: ns=1;i=54318
+      NodeClass: Object
+      BrowseName: Axes
+      DisplayName: Axes
+
+        ========================================
+        Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis1
+        NodeId: ns=1;i=54324
+        NodeClass: Object
+        BrowseName: Axis1
+        DisplayName: Axis1
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis1/MotionProfile
+          NodeId: ns=1;i=54325
+          NodeClass: Variable
+          BrowseName: MotionProfile
+          DisplayName: MotionProfile
+          DataType: ns=3;i=3008
+          Value: 1
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis1/ParameterSet
+          NodeId: ns=1;i=54326
+          NodeClass: Object
+          BrowseName: ParameterSet
+          DisplayName: ParameterSet
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis1/ParameterSet/ActualSpeed
+            NodeId: ns=1;i=54327
+            NodeClass: Variable
+            BrowseName: ActualSpeed
+            DisplayName: ActualSpeed
+            DataType: i=11
+            Value: 0.0
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis1/ParameterSet/ActualPosition
+            NodeId: ns=1;i=54329
+            NodeClass: Variable
+            BrowseName: ActualPosition
+            DisplayName: ActualPosition
+            DataType: i=11
+            Value: 0.0
+
+        ========================================
+        Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis2
+        NodeId: ns=1;i=54331
+        NodeClass: Object
+        BrowseName: Axis2
+        DisplayName: Axis2
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis2/MotionProfile
+          NodeId: ns=1;i=54332
+          NodeClass: Variable
+          BrowseName: MotionProfile
+          DisplayName: MotionProfile
+          DataType: ns=3;i=3008
+          Value: 1
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis2/ParameterSet
+          NodeId: ns=1;i=54333
+          NodeClass: Object
+          BrowseName: ParameterSet
+          DisplayName: ParameterSet
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis2/ParameterSet/ActualSpeed
+            NodeId: ns=1;i=54334
+            NodeClass: Variable
+            BrowseName: ActualSpeed
+            DisplayName: ActualSpeed
+            DataType: i=11
+            Value: 0.0
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis2/ParameterSet/ActualPosition
+            NodeId: ns=1;i=54336
+            NodeClass: Variable
+            BrowseName: ActualPosition
+            DisplayName: ActualPosition
+            DataType: i=11
+            Value: 0.0
+
+        ========================================
+        Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis3
+        NodeId: ns=1;i=54338
+        NodeClass: Object
+        BrowseName: Axis3
+        DisplayName: Axis3
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis3/MotionProfile
+          NodeId: ns=1;i=54339
+          NodeClass: Variable
+          BrowseName: MotionProfile
+          DisplayName: MotionProfile
+          DataType: ns=3;i=3008
+          Value: 1
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis3/ParameterSet
+          NodeId: ns=1;i=54340
+          NodeClass: Object
+          BrowseName: ParameterSet
+          DisplayName: ParameterSet
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis3/ParameterSet/ActualSpeed
+            NodeId: ns=1;i=54341
+            NodeClass: Variable
+            BrowseName: ActualSpeed
+            DisplayName: ActualSpeed
+            DataType: i=11
+            Value: 0.0
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis3/ParameterSet/ActualPosition
+            NodeId: ns=1;i=54343
+            NodeClass: Variable
+            BrowseName: ActualPosition
+            DisplayName: ActualPosition
+            DataType: i=11
+            Value: 0.0
+
+        ========================================
+        Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis4
+        NodeId: ns=1;i=54345
+        NodeClass: Object
+        BrowseName: Axis4
+        DisplayName: Axis4
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis4/MotionProfile
+          NodeId: ns=1;i=54346
+          NodeClass: Variable
+          BrowseName: MotionProfile
+          DisplayName: MotionProfile
+          DataType: ns=3;i=3008
+          Value: 1
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis4/ParameterSet
+          NodeId: ns=1;i=54347
+          NodeClass: Object
+          BrowseName: ParameterSet
+          DisplayName: ParameterSet
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis4/ParameterSet/ActualSpeed
+            NodeId: ns=1;i=54348
+            NodeClass: Variable
+            BrowseName: ActualSpeed
+            DisplayName: ActualSpeed
+            DataType: i=11
+            Value: 0.0
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis4/ParameterSet/ActualPosition
+            NodeId: ns=1;i=54350
+            NodeClass: Variable
+            BrowseName: ActualPosition
+            DisplayName: ActualPosition
+            DataType: i=11
+            Value: 0.0
+
+        ========================================
+        Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis5
+        NodeId: ns=1;i=54352
+        NodeClass: Object
+        BrowseName: Axis5
+        DisplayName: Axis5
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis5/MotionProfile
+          NodeId: ns=1;i=54353
+          NodeClass: Variable
+          BrowseName: MotionProfile
+          DisplayName: MotionProfile
+          DataType: ns=3;i=3008
+          Value: 1
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis5/ParameterSet
+          NodeId: ns=1;i=54354
+          NodeClass: Object
+          BrowseName: ParameterSet
+          DisplayName: ParameterSet
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis5/ParameterSet/ActualSpeed
+            NodeId: ns=1;i=54355
+            NodeClass: Variable
+            BrowseName: ActualSpeed
+            DisplayName: ActualSpeed
+            DataType: i=11
+            Value: 0.0
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis5/ParameterSet/ActualPosition
+            NodeId: ns=1;i=54357
+            NodeClass: Variable
+            BrowseName: ActualPosition
+            DisplayName: ActualPosition
+            DataType: i=11
+            Value: 0.0
+
+        ========================================
+        Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis6
+        NodeId: ns=1;i=54359
+        NodeClass: Object
+        BrowseName: Axis6
+        DisplayName: Axis6
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis6/MotionProfile
+          NodeId: ns=1;i=54360
+          NodeClass: Variable
+          BrowseName: MotionProfile
+          DisplayName: MotionProfile
+          DataType: ns=3;i=3008
+          Value: 1
+
+          ========================================
+          Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis6/ParameterSet
+          NodeId: ns=1;i=54361
+          NodeClass: Object
+          BrowseName: ParameterSet
+          DisplayName: ParameterSet
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis6/ParameterSet/ActualSpeed
+            NodeId: ns=1;i=54362
+            NodeClass: Variable
+            BrowseName: ActualSpeed
+            DisplayName: ActualSpeed
+            DataType: i=11
+            Value: 0.0
+
+            ========================================
+            Path: /RokaeRobot/MotionDevices/Robot/Axes/Axis6/ParameterSet/ActualPosition
+            NodeId: ns=1;i=54364
+            NodeClass: Variable
+            BrowseName: ActualPosition
+            DisplayName: ActualPosition
+            DataType: i=11
+            Value: 0.0
+
+      ========================================
+      Path: /RokaeRobot/MotionDevices/Robot/MotionDeviceCategory
+      NodeId: ns=1;i=54319
+      NodeClass: Variable
+      BrowseName: MotionDeviceCategory
+      DisplayName: MotionDeviceCategory
+      DataType: ns=3;i=18193
+      Value: 1
+
+      ========================================
+      Path: /RokaeRobot/MotionDevices/Robot/ProductCode
+      NodeId: ns=1;i=54320
+      NodeClass: Variable
+      BrowseName: ProductCode
+      DisplayName: ProductCode
+      DataType: i=12
+      Value: '123456'
+
+      ========================================
+      Path: /RokaeRobot/MotionDevices/Robot/SerialNumber
+      NodeId: ns=1;i=54321
+      NodeClass: Variable
+      BrowseName: SerialNumber
+      DisplayName: SerialNumber
+      DataType: i=12
+      Value: '123456'
+
+      ========================================
+      Path: /RokaeRobot/MotionDevices/Robot/Model
+      NodeId: ns=1;i=54322
+      NodeClass: Variable
+      BrowseName: Model
+      DisplayName: Model
+      DataType: i=21
+      Value: LocalizedText(Locale='en', Text='NB12s-1214-5A')
+
+      ========================================
+      Path: /RokaeRobot/MotionDevices/Robot/Manufacturer
+      NodeId: ns=1;i=54323
+      NodeClass: Variable
+      BrowseName: Manufacturer
+      DisplayName: Manufacturer
+      DataType: i=21
+      Value: LocalizedText(Locale='en', Text='Rokae')
+
+  ========================================
+  Path: /RokaeRobot/Controllers
+  NodeId: ns=1;i=54313
+  NodeClass: Object
+  BrowseName: Controllers
+  DisplayName: Controllers
+
+    ========================================
+    Path: /RokaeRobot/Controllers/xCore
+    NodeId: ns=1;i=54414
+    NodeClass: Object
+    BrowseName: xCore
+    DisplayName: xCore
+
+      ========================================
+      Path: /RokaeRobot/Controllers/xCore/TaskControls
+      NodeId: ns=1;i=54415
+      NodeClass: Object
+      BrowseName: TaskControls
+      DisplayName: TaskControls
+
+        ========================================
+        Path: /RokaeRobot/Controllers/xCore/TaskControls/RobotProgram
+        NodeId: ns=1;i=54427
+        NodeClass: Object
+        BrowseName: RobotProgram
+        DisplayName: RobotProgram
+
+          ========================================
+          Path: /RokaeRobot/Controllers/xCore/TaskControls/RobotProgram/ComponentName
+          NodeId: ns=1;i=54428
+          NodeClass: Variable
+          BrowseName: ComponentName
+          DisplayName: ComponentName
+          DataType: i=21
+          Value: LocalizedText(Locale=None, Text=None)
+
+          ========================================
+          Path: /RokaeRobot/Controllers/xCore/TaskControls/RobotProgram/ParameterSet
+          NodeId: ns=1;i=54429
+          NodeClass: Object
+          BrowseName: ParameterSet
+          DisplayName: ParameterSet
+
+            ========================================
+            Path: /RokaeRobot/Controllers/xCore/TaskControls/RobotProgram/ParameterSet/TaskProgramLoaded
+            NodeId: ns=1;i=54430
+            NodeClass: Variable
+            BrowseName: TaskProgramLoaded
+            DisplayName: TaskProgramLoaded
+            DataType: i=1
+            Value: False
+
+            ========================================
+            Path: /RokaeRobot/Controllers/xCore/TaskControls/RobotProgram/ParameterSet/TaskProgramName
+            NodeId: ns=1;i=54431
+            NodeClass: Variable
+            BrowseName: TaskProgramName
+            DisplayName: TaskProgramName
+            DataType: i=12
+            Value: ''
+
+      ========================================
+      Path: /RokaeRobot/Controllers/xCore/Software
+      NodeId: ns=1;i=54416
+      NodeClass: Object
+      BrowseName: Software
+      DisplayName: Software
+
+        ========================================
+        Path: /RokaeRobot/Controllers/xCore/Software/xCore
+        NodeId: ns=1;i=54423
+        NodeClass: Object
+        BrowseName: xCore
+        DisplayName: xCore
+
+          ========================================
+          Path: /RokaeRobot/Controllers/xCore/Software/xCore/SoftwareRevision
+          NodeId: ns=1;i=54424
+          NodeClass: Variable
+          BrowseName: SoftwareRevision
+          DisplayName: SoftwareRevision
+          DataType: i=12
+          Value: '2.2.2'
+
+          ========================================
+          Path: /RokaeRobot/Controllers/xCore/Software/xCore/Model
+          NodeId: ns=1;i=54425
+          NodeClass: Variable
+          BrowseName: Model
+          DisplayName: Model
+          DataType: i=21
+          Value: LocalizedText(Locale='en', Text='NB12s-1214-5A')
+
+          ========================================
+          Path: /RokaeRobot/Controllers/xCore/Software/xCore/Manufacturer
+          NodeId: ns=1;i=54426
+          NodeClass: Variable
+          BrowseName: Manufacturer
+          DisplayName: Manufacturer
+          DataType: i=21
+          Value: LocalizedText(Locale='en', Text='Rokae')
+
+      ========================================
+      Path: /RokaeRobot/Controllers/xCore/CurrentUser
+      NodeId: ns=1;i=54417
+      NodeClass: Object
+      BrowseName: CurrentUser
+      DisplayName: CurrentUser
+
+        ========================================
+        Path: /RokaeRobot/Controllers/xCore/CurrentUser/Level
+        NodeId: ns=1;i=54418
+        NodeClass: Variable
+        BrowseName: Level
+        DisplayName: Level
+        DataType: i=12
+        Value: None
+
+      ========================================
+      Path: /RokaeRobot/Controllers/xCore/ProductCode
+      NodeId: ns=1;i=54419
+      NodeClass: Variable
+      BrowseName: ProductCode
+      DisplayName: ProductCode
+      DataType: i=12
+      Value: '123456'
+
+      ========================================
+      Path: /RokaeRobot/Controllers/xCore/SerialNumber
+      NodeId: ns=1;i=54420
+      NodeClass: Variable
+      BrowseName: SerialNumber
+      DisplayName: SerialNumber
+      DataType: i=12
+      Value: '123456'
+
+      ========================================
+      Path: /RokaeRobot/Controllers/xCore/Model
+      NodeId: ns=1;i=54421
+      NodeClass: Variable
+      BrowseName: Model
+      DisplayName: Model
+      DataType: i=21
+      Value: LocalizedText(Locale='en', Text='NB12s-1214-5A')
+
+      ========================================
+      Path: /RokaeRobot/Controllers/xCore/Manufacturer
+      NodeId: ns=1;i=54422
+      NodeClass: Variable
+      BrowseName: Manufacturer
+      DisplayName: Manufacturer
+      DataType: i=21
+      Value: LocalizedText(Locale='en', Text='Rokae')
+
+  ========================================
+  Path: /RokaeRobot/CustomVariables
+  NodeId: ns=1;i=54437
+  NodeClass: Object
+  BrowseName: CustomVariables
+  DisplayName: CustomVariables
+
+========================================
+ RokaeRobot tree browse: SUCCESS
+========================================
+Visited nodes: 110

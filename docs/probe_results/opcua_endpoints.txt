@@ -1,0 +1,208 @@
+========================================
+ RobotEmbeddedTerminal OPC UA Probe
+========================================
+Server: opc.tcp://192.168.21.10:4840
+
+[1/1] Requesting server endpoints...
+
+Endpoint discovery: SUCCESS
+Endpoint count: 9
+
+========================================
+Endpoint # 0
+========================================
+Endpoint URL: opc.tcp://192.168.21.10:4840
+Security Mode: None_
+Security Policy: http://opcfoundation.org/UA/SecurityPolicy#None
+Application URI: urn:xcore.opcua.server
+Application Name: Robot OPC UA Application
+Product URI: http://open62541.org
+User Identity Tokens:
+  PolicyId: open62541-anonymous-policy
+  TokenType: Anonymous
+  Token Security Policy: None
+
+  PolicyId: open62541-certificate-policy
+  TokenType: Certificate
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+  PolicyId: open62541-username-policy
+  TokenType: UserName
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+========================================
+Endpoint # 1
+========================================
+Endpoint URL: opc.tcp://192.168.21.10:4840
+Security Mode: Sign
+Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Basic128Rsa15
+Application URI: urn:xcore.opcua.server
+Application Name: Robot OPC UA Application
+Product URI: http://open62541.org
+User Identity Tokens:
+  PolicyId: open62541-anonymous-policy
+  TokenType: Anonymous
+  Token Security Policy: None
+
+  PolicyId: open62541-certificate-policy
+  TokenType: Certificate
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+  PolicyId: open62541-username-policy
+  TokenType: UserName
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+========================================
+Endpoint # 2
+========================================
+Endpoint URL: opc.tcp://192.168.21.10:4840
+Security Mode: SignAndEncrypt
+Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Basic128Rsa15
+Application URI: urn:xcore.opcua.server
+Application Name: Robot OPC UA Application
+Product URI: http://open62541.org
+User Identity Tokens:
+  PolicyId: open62541-anonymous-policy
+  TokenType: Anonymous
+  Token Security Policy: None
+
+  PolicyId: open62541-certificate-policy
+  TokenType: Certificate
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+  PolicyId: open62541-username-policy
+  TokenType: UserName
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+========================================
+Endpoint # 3
+========================================
+Endpoint URL: opc.tcp://192.168.21.10:4840
+Security Mode: Sign
+Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Basic256
+Application URI: urn:xcore.opcua.server
+Application Name: Robot OPC UA Application
+Product URI: http://open62541.org
+User Identity Tokens:
+  PolicyId: open62541-anonymous-policy
+  TokenType: Anonymous
+  Token Security Policy: None
+
+  PolicyId: open62541-certificate-policy
+  TokenType: Certificate
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+  PolicyId: open62541-username-policy
+  TokenType: UserName
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+========================================
+Endpoint # 4
+========================================
+Endpoint URL: opc.tcp://192.168.21.10:4840
+Security Mode: SignAndEncrypt
+Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Basic256
+Application URI: urn:xcore.opcua.server
+Application Name: Robot OPC UA Application
+Product URI: http://open62541.org
+User Identity Tokens:
+  PolicyId: open62541-anonymous-policy
+  TokenType: Anonymous
+  Token Security Policy: None
+
+  PolicyId: open62541-certificate-policy
+  TokenType: Certificate
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+  PolicyId: open62541-username-policy
+  TokenType: UserName
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+========================================
+Endpoint # 5
+========================================
+Endpoint URL: opc.tcp://192.168.21.10:4840
+Security Mode: Sign
+Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Basic256Sha256
+Application URI: urn:xcore.opcua.server
+Application Name: Robot OPC UA Application
+Product URI: http://open62541.org
+User Identity Tokens:
+  PolicyId: open62541-anonymous-policy
+  TokenType: Anonymous
+  Token Security Policy: None
+
+  PolicyId: open62541-certificate-policy
+  TokenType: Certificate
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+  PolicyId: open62541-username-policy
+  TokenType: UserName
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+========================================
+Endpoint # 6
+========================================
+Endpoint URL: opc.tcp://192.168.21.10:4840
+Security Mode: SignAndEncrypt
+Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Basic256Sha256
+Application URI: urn:xcore.opcua.server
+Application Name: Robot OPC UA Application
+Product URI: http://open62541.org
+User Identity Tokens:
+  PolicyId: open62541-anonymous-policy
+  TokenType: Anonymous
+  Token Security Policy: None
+
+  PolicyId: open62541-certificate-policy
+  TokenType: Certificate
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+  PolicyId: open62541-username-policy
+  TokenType: UserName
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+========================================
+Endpoint # 7
+========================================
+Endpoint URL: opc.tcp://192.168.21.10:4840
+Security Mode: Sign
+Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+Application URI: urn:xcore.opcua.server
+Application Name: Robot OPC UA Application
+Product URI: http://open62541.org
+User Identity Tokens:
+  PolicyId: open62541-anonymous-policy
+  TokenType: Anonymous
+  Token Security Policy: None
+
+  PolicyId: open62541-certificate-policy
+  TokenType: Certificate
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+  PolicyId: open62541-username-policy
+  TokenType: UserName
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+========================================
+Endpoint # 8
+========================================
+Endpoint URL: opc.tcp://192.168.21.10:4840
+Security Mode: SignAndEncrypt
+Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+Application URI: urn:xcore.opcua.server
+Application Name: Robot OPC UA Application
+Product URI: http://open62541.org
+User Identity Tokens:
+  PolicyId: open62541-anonymous-policy
+  TokenType: Anonymous
+  Token Security Policy: None
+
+  PolicyId: open62541-certificate-policy
+  TokenType: Certificate
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
+  PolicyId: open62541-username-policy
+  TokenType: UserName
+  Token Security Policy: http://opcfoundation.org/UA/SecurityPolicy#Aes128_Sha256_RsaOaep
+
