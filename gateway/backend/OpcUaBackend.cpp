@@ -1,17 +1,16 @@
-#include <open62541/client.h>
+#include "backend/OpcUaBackend.h"
+
 #include <open62541/client_config_default.h>
 #include <open62541/client_highlevel.h>
 
 #include <array>
-#include <iomanip>
+#include <chrono>
 #include <iostream>
 #include <string>
+#include <utility>
 
 namespace
 {
-
-constexpr const char* kEndpoint =
-    "opc.tcp://192.168.21.10:4840";
 
 constexpr UA_UInt32 kModeNode = 54435;
 
@@ -26,8 +25,6 @@ constexpr std::array<UA_UInt32, 6> kJointNodes = {
 
 constexpr UA_UInt32 kTaskLoadedNode = 54430;
 constexpr UA_UInt32 kTaskNameNode   = 54431;
-constexpr UA_UInt32 kXCoreVersionNode = 54424;
-
 
 const char* modeToString(UA_Int32 mode)
 {
@@ -52,7 +49,6 @@ const char* modeToString(UA_Int32 mode)
             return "UNKNOWN";
     }
 }
-
 
 bool readDouble(
     UA_Client* client,
@@ -92,7 +88,8 @@ bool readDouble(
     else
     {
         std::cerr
-            << "Read Double failed. Node ns=1;i="
+            << "[OpcUaBackend] Read Double failed. "
+            << "Node ns=1;i="
             << identifier
             << ", status="
             << UA_StatusCode_name(status)
@@ -103,7 +100,6 @@ bool readDouble(
 
     return ok;
 }
-
 
 bool readEnumInt32(
     UA_Client* client,
@@ -136,25 +132,37 @@ bool readEnumInt32(
         switch (value.type->typeKind)
         {
         case UA_DATATYPEKIND_INT16:
-            output = static_cast<UA_Int32>(
-                *static_cast<UA_Int16*>(value.data)
-            );
+            output =
+                static_cast<UA_Int32>(
+                    *static_cast<UA_Int16*>(
+                        value.data
+                    )
+                );
+
             ok = true;
             break;
 
         case UA_DATATYPEKIND_INT32:
             output =
-                *static_cast<UA_Int32*>(value.data);
+                *static_cast<UA_Int32*>(
+                    value.data
+                );
+
             ok = true;
             break;
 
         case UA_DATATYPEKIND_ENUM:
-            if (value.type->memSize == sizeof(UA_Int32))
+            if (value.type->memSize ==
+                sizeof(UA_Int32))
             {
                 output =
-                    *static_cast<UA_Int32*>(value.data);
+                    *static_cast<UA_Int32*>(
+                        value.data
+                    );
+
                 ok = true;
             }
+
             break;
 
         default:
@@ -165,7 +173,9 @@ bool readEnumInt32(
     if (!ok)
     {
         std::cerr
-            << "Read OperationalMode failed. Node ns=1;i="
+            << "[OpcUaBackend] "
+            << "Read OperationalMode failed. "
+            << "Node ns=1;i="
             << identifier
             << ", status="
             << UA_StatusCode_name(status);
@@ -188,7 +198,6 @@ bool readEnumInt32(
 
     return ok;
 }
-
 
 bool readBoolean(
     UA_Client* client,
@@ -228,7 +237,8 @@ bool readBoolean(
     else
     {
         std::cerr
-            << "Read Boolean failed. Node ns=1;i="
+            << "[OpcUaBackend] Read Boolean failed. "
+            << "Node ns=1;i="
             << identifier
             << ", status="
             << UA_StatusCode_name(status)
@@ -239,7 +249,6 @@ bool readBoolean(
 
     return ok;
 }
-
 
 bool readString(
     UA_Client* client,
@@ -286,7 +295,8 @@ bool readString(
     else
     {
         std::cerr
-            << "Read String failed. Node ns=1;i="
+            << "[OpcUaBackend] Read String failed. "
+            << "Node ns=1;i="
             << identifier
             << ", status="
             << UA_StatusCode_name(status)
@@ -297,168 +307,275 @@ bool readString(
 
     return ok;
 }
-
 } // namespace
 
-
-int main()
+OpcUaBackend::OpcUaBackend(
+    const std::string& endpoint)
+    : endpoint_(endpoint)
 {
+}
+
+OpcUaBackend::~OpcUaBackend()
+{
+    disconnect();
+}
+
+bool OpcUaBackend::connect()
+{
+    if (connected_ && client_ != nullptr)
+    {
+        return true;
+    }
+
+    if (client_ != nullptr)
+    {
+        UA_Client_delete(client_);
+        client_ = nullptr;
+    }
+
     std::cout
-        << "========================================\n"
-        << " RobotEmbeddedTerminal C++ OPC UA Probe\n"
-        << "========================================\n"
-        << "Server: "
-        << kEndpoint
-        << "\n\n";
+        << "[OpcUaBackend] Connecting to "
+        << endpoint_
+        << '\n';
 
-    UA_Client* client =
-        UA_Client_new();
+    client_ = UA_Client_new();
 
-    if (!client)
+    if (client_ == nullptr)
     {
         std::cerr
-            << "UA_Client_new failed.\n";
+            << "[OpcUaBackend] UA_Client_new failed\n";
 
-        return 1;
+        connected_ = false;
+
+        return false;
     }
 
     UA_ClientConfig* config =
-        UA_Client_getConfig(client);
+        UA_Client_getConfig(client_);
 
     UA_ClientConfig_setDefault(config);
 
-    std::cout
-        << "[1/4] Connecting...\n";
-
-    UA_StatusCode status =
+    const UA_StatusCode status =
         UA_Client_connect(
-            client,
-            kEndpoint
+            client_,
+            endpoint_.c_str()
         );
 
     if (status != UA_STATUSCODE_GOOD)
     {
         std::cerr
-            << "Connection FAILED: "
+            << "[OpcUaBackend] Connection failed: "
             << UA_StatusCode_name(status)
             << '\n';
 
-        UA_Client_delete(client);
+        UA_Client_delete(client_);
+        client_ = nullptr;
 
-        return 2;
+        connected_ = false;
+
+        return false;
     }
 
-    std::cout
-        << "Connection: SUCCESS\n\n";
-
-    // ---------------------------------------------
-    // Robot mode
-    // ---------------------------------------------
+    connected_ = true;
 
     std::cout
-        << "[2/4] Robot mode\n";
+        << "[OpcUaBackend] Connection SUCCESS\n";
 
-    UA_Int32 mode = -1;
+    return true;
+}
 
-    if (readEnumInt32(
-            client,
-            kModeNode,
-            mode))
+void OpcUaBackend::disconnect()
+{
+    if (client_ != nullptr)
     {
-        std::cout
-            << "OperationalMode: "
-            << mode
-            << " ("
-            << modeToString(mode)
-            << ")\n";
+        if (connected_)
+        {
+            UA_Client_disconnect(client_);
+        }
+
+        UA_Client_delete(client_);
+        client_ = nullptr;
     }
 
-    std::cout << '\n';
+    connected_ = false;
+}
 
-    // ---------------------------------------------
-    // Joint position
-    // ---------------------------------------------
+bool OpcUaBackend::isConnected() const
+{
+    return connected_;
+}
 
-    std::cout
-        << "[3/4] Joint positions\n";
+bool OpcUaBackend::readRobotState(
+    RobotState& state)
+{
+    if (!connected_ ||
+        client_ == nullptr)
+    {
+        state.connected = false;
 
-    std::cout
-        << std::fixed
-        << std::setprecision(6);
+        return false;
+    }
+
+    UA_Int32 modeValue = -1;
+
+    if (!readEnumInt32(
+            client_,
+            kModeNode,
+            modeValue))
+    {
+        return false;
+    }
+
+    std::array<double, 6> joints{};
 
     for (std::size_t i = 0;
          i < kJointNodes.size();
          ++i)
     {
-        double position = 0.0;
-
-        if (readDouble(
-                client,
+        if (!readDouble(
+                client_,
                 kJointNodes[i],
-                position))
+                joints[i]))
         {
-            std::cout
-                << "J"
-                << (i + 1)
-                << ": "
-                << position
-                << " deg\n";
+            return false;
         }
     }
 
-    std::cout << '\n';
+    // -----------------------------
+    // 所有关键 OPC UA 数据读取成功后，
+    // 再更新 RobotState。
+    // -----------------------------
 
-    // ---------------------------------------------
-    // Task / xCore
-    // ---------------------------------------------
+    state.connected = true;
 
-    std::cout
-        << "[4/4] Task / Controller\n";
+    state.joint = joints;
+
+    state.mode =
+        modeToString(modeValue);
+
+    state.xcoreRunning = true;
+
+    // 当前尚未确认真实 TCP Pose，
+    // 不生成假的位姿数据。
+    state.pose.fill(0.0);
+
+    // Task 下一阶段由 readTaskState()
+    // 正式接入。
+    state.task = "None";
+
+    // CPU / Memory 当前 OPC UA
+    // 尚未找到真实数据源。
+    state.cpuUsage = 0.0;
+    state.memoryUsage = 0.0;
+
+    const auto now =
+        std::chrono::system_clock::now()
+            .time_since_epoch();
+
+    state.timestampMs =
+        static_cast<std::uint64_t>(
+            std::chrono::duration_cast<
+                std::chrono::milliseconds>(
+                now
+            ).count()
+        );
+
+    return true;
+}
+
+bool OpcUaBackend::readIOState(
+    IOState& state)
+{
+    (void)state;
+
+    // 当前尚未确认真实 OPC UA IO 节点。
+    return false;
+}
+
+bool OpcUaBackend::readTaskState(
+    TaskState& state)
+{
+    if (!connected_ ||
+        client_ == nullptr)
+    {
+        return false;
+    }
 
     bool taskLoaded = false;
-    std::string taskName;
-    std::string xcoreVersion;
 
-    if (readBoolean(
-            client,
+    if (!readBoolean(
+            client_,
             kTaskLoadedNode,
             taskLoaded))
     {
-        std::cout
-            << "TaskProgramLoaded: "
-            << (taskLoaded ? "true" : "false")
-            << '\n';
+        return false;
     }
 
-    if (readString(
-            client,
+    std::string taskName;
+
+    if (!readString(
+            client_,
             kTaskNameNode,
             taskName))
     {
-        std::cout
-            << "TaskProgramName: "
-            << taskName
-            << '\n';
+        return false;
     }
 
-    if (readString(
-            client,
-            kXCoreVersionNode,
-            xcoreVersion))
+    // 当前 OPC UA 只明确确认了：
+    // TaskProgramLoaded + TaskProgramName。
+    //
+    // 尚未找到真实工程名和完整任务列表接口，
+    // 因此不要伪造不存在的数据。
+
+    state.projectName = "";
+
+    state.taskList.clear();
+
+    if (taskLoaded &&
+        !taskName.empty())
     {
-        std::cout
-            << "xCore Version: "
-            << xcoreVersion
-            << '\n';
+        state.currentTask =
+            taskName;
+
+        state.taskList.push_back(
+            taskName
+        );
+
+        // 注意：
+        // TaskProgramLoaded 只证明任务已加载，
+        // 不能据此声称任务正在运行。
+        state.status =
+            "LOADED";
+    }
+    else
+    {
+        state.currentTask =
+            "None";
+
+        state.status =
+            "NOT_LOADED";
     }
 
-    UA_Client_disconnect(client);
-    UA_Client_delete(client);
+    const auto now =
+        std::chrono::system_clock::now()
+            .time_since_epoch();
 
-    std::cout
-        << "\n========================================\n"
-        << " C++ OPC UA probe: SUCCESS\n"
-        << "========================================\n";
+    state.timestampMs =
+        static_cast<std::uint64_t>(
+            std::chrono::duration_cast<
+                std::chrono::milliseconds>(
+                now
+            ).count()
+        );
 
-    return 0;
+    return true;
+}
+
+bool OpcUaBackend::pollAlarmEvent(
+    AlarmEvent& event)
+{
+    (void)event;
+
+    // 当前尚未确认真实 OPC UA Alarm 节点。
+    return false;
 }

@@ -19,6 +19,18 @@ find_package(
     Network
 )
 
+find_package(
+    PkgConfig
+    REQUIRED
+)
+
+pkg_check_modules(
+    OPEN62541
+    REQUIRED
+    IMPORTED_TARGET
+    open62541
+)
+
 # ==================================================
 # Gateway
 # ==================================================
@@ -48,6 +60,97 @@ target_include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/gateway
 )
 
+
+# ==================================================
+# OpcUaBackend connection test
+# ==================================================
+
+add_executable(
+    opcua_backend_connect_test
+
+    tools/opcua_backend_connect_test.cpp
+
+    gateway/backend/OpcUaBackend.cpp
+
+    gateway/backend/OpcUaBackend.h
+)
+
+target_include_directories(
+    opcua_backend_connect_test
+
+    PRIVATE
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/gateway
+)
+
+target_link_libraries(
+    opcua_backend_connect_test
+
+    PRIVATE
+
+    PkgConfig::OPEN62541
+)
+
+
+# ==================================================
+# OpcUaBackend RobotState test
+# ==================================================
+
+add_executable(
+    opcua_backend_robot_state_test
+
+    tools/opcua_backend_robot_state_test.cpp
+
+    gateway/backend/OpcUaBackend.cpp
+
+    gateway/backend/OpcUaBackend.h
+)
+
+target_include_directories(
+    opcua_backend_robot_state_test
+
+    PRIVATE
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/gateway
+)
+
+target_link_libraries(
+    opcua_backend_robot_state_test
+
+    PRIVATE
+
+    PkgConfig::OPEN62541
+)
+
+# ==================================================
+# OpcUaBackend TaskState test
+# ==================================================
+
+add_executable(
+    opcua_backend_task_state_test
+
+    tools/opcua_backend_task_state_test.cpp
+
+    gateway/backend/OpcUaBackend.cpp
+
+    gateway/backend/OpcUaBackend.h
+)
+
+target_include_directories(
+    opcua_backend_task_state_test
+
+    PRIVATE
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/gateway
+)
+
+target_link_libraries(
+    opcua_backend_task_state_test
+
+    PRIVATE
+
+    PkgConfig::OPEN62541
+)
 # ==================================================
 # PC HMI
 # ==================================================

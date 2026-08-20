@@ -1,0 +1,58 @@
+========================================
+ RobotEmbeddedTerminal C++ OPC UA Probe
+========================================
+Server: opc.tcp://192.168.21.10:4840
+
+[1/4] Connecting...
+[2026-08-20 10:53:35.041 (UTC+0800)] [32minfo/eventloop[0m	Starting the EventLoop
+[2026-08-20 10:53:35.041 (UTC+0800)] [32minfo/network[0m	TCP 4	| Opening a connection to "192.168.21.10" on port 4840
+[2026-08-20 10:53:35.042 (UTC+0800)] [33mwarn/channel[0m	TCP 4	| SC 5	| The "CreatedAt" timestamp of the received ChannelSecurityToken does not match with the local system clock
+[2026-08-20 10:53:35.042 (UTC+0800)] [32minfo/channel[0m	TCP 4	| SC 5	| SecureChannel opened with SecurityPolicy http://opcfoundation.org/UA/SecurityPolicy#None and a revised lifetime of 600.00s
+[2026-08-20 10:53:35.042 (UTC+0800)] [32minfo/client[0m	Client Status: ChannelState: Open, SessionState: Closed, ConnectStatus: Good
+[2026-08-20 10:53:35.043 (UTC+0800)] [32minfo/client[0m	Use the EndpointURL opc.tcp://GENE-KBU6-i7:4840/ returned from FindServers and reconnect
+[2026-08-20 10:53:35.043 (UTC+0800)] [32minfo/channel[0m	TCP 4	| SC 5	| SecureChannel closed
+[2026-08-20 10:53:35.043 (UTC+0800)] [32minfo/client[0m	Client Status: ChannelState: Closed, SessionState: Closed, ConnectStatus: Good
+[2026-08-20 10:53:35.043 (UTC+0800)] [32minfo/network[0m	TCP 5	| Opening a connection to "192.168.21.10" on port 4840
+[2026-08-20 10:53:35.043 (UTC+0800)] [32minfo/network[0m	TCP 4	| Socket closed
+[2026-08-20 10:53:35.044 (UTC+0800)] [33mwarn/channel[0m	TCP 5	| SC 6	| The "CreatedAt" timestamp of the received ChannelSecurityToken does not match with the local system clock
+[2026-08-20 10:53:35.044 (UTC+0800)] [32minfo/channel[0m	TCP 5	| SC 6	| SecureChannel opened with SecurityPolicy http://opcfoundation.org/UA/SecurityPolicy#None and a revised lifetime of 600.00s
+[2026-08-20 10:53:35.044 (UTC+0800)] [32minfo/client[0m	Client Status: ChannelState: Open, SessionState: Closed, ConnectStatus: Good
+[2026-08-20 10:53:35.044 (UTC+0800)] [32minfo/client[0m	Rejecting endpoint 1: security policy not available
+[2026-08-20 10:53:35.044 (UTC+0800)] [32minfo/client[0m	Rejecting endpoint 2: security policy not available
+[2026-08-20 10:53:35.044 (UTC+0800)] [32minfo/client[0m	Rejecting endpoint 3: security policy not available
+[2026-08-20 10:53:35.044 (UTC+0800)] [32minfo/client[0m	Rejecting endpoint 4: security policy not available
+[2026-08-20 10:53:35.044 (UTC+0800)] [32minfo/client[0m	Rejecting endpoint 5: security policy not available
+[2026-08-20 10:53:35.044 (UTC+0800)] [32minfo/client[0m	Rejecting endpoint 6: security policy not available
+[2026-08-20 10:53:35.044 (UTC+0800)] [32minfo/client[0m	Rejecting endpoint 7: security policy not available
+[2026-08-20 10:53:35.044 (UTC+0800)] [32minfo/client[0m	Rejecting endpoint 8: security policy not available
+[2026-08-20 10:53:35.044 (UTC+0800)] [32minfo/client[0m	Selected endpoint with EndpointUrl opc.tcp://GENE-KBU6-i7:4840/, SecurityMode None and SecurityPolicy http://opcfoundation.org/UA/SecurityPolicy#None
+[2026-08-20 10:53:35.045 (UTC+0800)] [32minfo/client[0m	Client Status: ChannelState: Open, SessionState: Created, ConnectStatus: Good
+[2026-08-20 10:53:35.046 (UTC+0800)] [32minfo/client[0m	Client Status: ChannelState: Open, SessionState: Activated, ConnectStatus: Good
+Connection: SUCCESS
+
+[2/4] Robot mode
+OperationalMode: 1 (MANUAL_REDUCED_SPEED)
+
+[3/4] Joint positions
+J1: 0.000000 deg
+J2: 0.000000 deg
+J3: 0.000000 deg
+J4: 0.000000 deg
+J5: 0.000000 deg
+J6: 0.000000 deg
+
+[4/4] Task / Controller
+TaskProgramLoaded: false
+TaskProgramName: 
+xCore Version: 2.2.2
+[2026-08-20 10:53:35.051 (UTC+0800)] [32minfo/channel[0m	TCP 5	| SC 6	| SecureChannel closed
+[2026-08-20 10:53:35.052 (UTC+0800)] [32minfo/client[0m	Client Status: ChannelState: Closed, SessionState: Closed, ConnectStatus: BadConnectionClosed
+[2026-08-20 10:53:35.052 (UTC+0800)] [32minfo/network[0m	TCP 5	| Socket closed
+[2026-08-20 10:53:35.151 (UTC+0800)] [32minfo/eventloop[0m	Stopping the EventLoop
+[2026-08-20 10:53:35.151 (UTC+0800)] [32minfo/network[0m	UDP	| Shutting down the ConnectionManager
+[2026-08-20 10:53:35.151 (UTC+0800)] [32minfo/network[0m	TCP	| Shutting down the ConnectionManager
+[2026-08-20 10:53:35.151 (UTC+0800)] [32minfo/eventloop[0m	The EventLoop has stopped
+
+========================================
+ C++ OPC UA probe: SUCCESS
+========================================
