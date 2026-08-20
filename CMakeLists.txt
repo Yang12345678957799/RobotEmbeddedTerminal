@@ -41,6 +41,8 @@ add_executable(
     gateway/main.cpp
 
     gateway/backend/MockBackend.cpp
+    gateway/backend/OpcUaBackend.cpp
+    gateway/backend/OpcUaBackend.h
 
     gateway/model/RobotState.h
     gateway/model/IOState.h
@@ -60,6 +62,13 @@ target_include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/gateway
 )
 
+target_link_libraries(
+    robot_gateway
+
+    PRIVATE
+
+    PkgConfig::OPEN62541
+)
 
 # ==================================================
 # OpcUaBackend connection test

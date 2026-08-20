@@ -1,4 +1,7 @@
+#include "backend/RobotBackend.h"
 #include "backend/MockBackend.h"
+#include "backend/OpcUaBackend.h"
+
 #include "network/TcpServer.h"
 #include "protocol/ProtocolCodec.h"
 #include "model/IOState.h"
@@ -10,28 +13,69 @@
 #include <iostream>
 #include <thread>
 #include <vector>
-
+#include <memory>
+#include <string>
 #include <nlohmann/json.hpp>
 
-int main()
+int main(int argc, char* argv[])
 {
     std::cout
         << "Robot Gateway starting..."
         << std::endl;
 
-    MockBackend backend;
+    std::string backendName = "mock";
 
-    if (!backend.connect())
+    if (argc >= 2)
+    {
+        backendName = argv[1];
+    }
+
+    std::unique_ptr<RobotBackend> backend;
+
+    if (backendName == "mock")
+    {
+        backend =
+            std::make_unique<MockBackend>();
+    }
+    else if (backendName == "opcua")
+    {
+        backend =
+            std::make_unique<OpcUaBackend>();
+    }
+    else
     {
         std::cerr
-            << "Failed to connect MockBackend."
+            << "Unknown backend: "
+            << backendName
+            << std::endl;
+
+        std::cerr
+            << "Usage: "
+            << argv[0]
+            << " [mock|opcua]"
             << std::endl;
 
         return 1;
     }
 
     std::cout
-        << "MockBackend connected."
+        << "Selected backend: "
+        << backendName
+        << std::endl;
+
+    if (!backend->connect())
+    {
+        std::cerr
+            << "Failed to connect backend: "
+            << backendName
+            << std::endl;
+
+        return 1;
+    }
+
+    std::cout
+        << "Backend connected: "
+        << backendName
         << std::endl;
 
     TcpServer server;
@@ -158,7 +202,7 @@ int main()
             // 3. 获取机器人状态
             // --------------------------
 
-            if (!backend.readRobotState(state))
+            if (!backend->readRobotState(state))
             {
                 std::cerr
                     << "Failed to read RobotState."
@@ -197,50 +241,43 @@ int main()
             // 6. 获取 IO 状态
             // --------------------------
 
-            if (!backend.readIOState(ioState))
+            if (backendName == "mock")
             {
-                std::cerr
-                    << "Failed to read IOState."
-                    << std::endl;
+                if (!backend->readIOState(ioState))
+                {
+                    std::cerr
+                        << "Failed to read IOState."
+                        << std::endl;
 
-                break;
+                    break;
+                }
+
+                const std::string ioJson =
+                    ProtocolCodec::ioStateToJson(
+                        ioState
+                    );
+
+                const auto ioPacket =
+                    ProtocolCodec::packMessage(
+                        ioJson
+                    );
+
+                if (!server.sendPacket(ioPacket))
+                {
+                    std::cout
+                        << "Client disconnected while sending IO."
+                        << std::endl;
+
+                    break;
+                }
             }
-
-
-            // --------------------------
-            // 7. IOState -> JSON
-            // --------------------------
-
-            const std::string ioJson =
-                ProtocolCodec::ioStateToJson(
-                    ioState
-                );
-
-            const auto ioPacket =
-                ProtocolCodec::packMessage(
-                    ioJson
-                );
-
-
-            // --------------------------
-            // 8. 发给客户端
-            // --------------------------
-
-            if (!server.sendPacket(ioPacket))
-            {
-                std::cout
-                    << "Client disconnected while sending IO."
-                    << std::endl;
-
-                break;
-            }           
 
 
             // --------------------------
             // 9. 获取 Task 状态
             // --------------------------
 
-            if (!backend.readTaskState(taskState))
+            if (!backend->readTaskState(taskState))
             {
                 std::cerr
                     << "Failed to read TaskState."
@@ -282,7 +319,7 @@ int main()
             // 12. 检查 Alarm Event
             // --------------------------
 
-            if (backend.pollAlarmEvent(
+            if (backend->pollAlarmEvent(
                     alarmEvent
                 ))
             {
